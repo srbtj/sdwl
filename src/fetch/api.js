@@ -1,3 +1,4 @@
+'use strict'
 import axios from 'axios';
 import qs from 'qs'
 import { URLS } from './url'
@@ -26,7 +27,7 @@ axios.interceptors.request.use((config) => {
 
 export function fetch (url, params) {
   return new Promise((resolve, reject) => {
-    let handleResponse = function (resolve, response) {
+    function handleResponse (resolve, response) {
       const _body = response.data || response
       // const _status = response.status
       // console.log(`调用${url}返回的数据:`, response)
