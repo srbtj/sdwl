@@ -25,7 +25,7 @@ $(function () {
           let djTypeText = maps[dj_type];
           $('.second-crumb, .item-tab-common').text(djTypeText);
           let relativeArr = [];
-          
+
           api.GetPartyByType({pageNumber: 1, pageSize: 6, partyBuildType: dj_type}).then(res => {
             let {list = []} = res
             list.map(item => {
@@ -45,7 +45,7 @@ $(function () {
               }).join('');
               $('.item-tab-ctx').empty().append(relativeStr);
               renderFont('ajax1')
-              tap('.second-crumb', function () {
+              tap('.second-crumb, .item-tab .more', function () {
                 window.location.href=`dangjian-list.html?tab=${dj_type}`
               })
               tap('.item-tab-ctx', '.tab-ctx-desc', function ({target}) {

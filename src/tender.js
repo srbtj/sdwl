@@ -38,7 +38,7 @@ $(function () {
         fetData();
       }
     });
-  
+
   }
   // 初始化页面
   let refreshData = function (datas, index) {
@@ -50,7 +50,7 @@ $(function () {
     }
     $('.no-data-tip').hide()
     let result = datas.map(item => {
-    let pubtime = moment(item.date).format('YYYY-MM-DD');
+    let pubtime = moment(item.publishDate).format('YYYY-MM-DD');
     let cityName = item.cityName ? `[${item.cityName}]` : ''
     return `
       <li class="contact-item" data-id="${item.id}">
@@ -64,7 +64,7 @@ $(function () {
     $('.contact-list').empty().append(result);
     let el = datas[index];
     let desc = el.content;
-    let pubtime = moment(el.date).format('YYYY-MM-DD');
+    let pubtime = moment(el.publishDate).format('YYYY-MM-DD');
     let count = el.watchTimes || 0;
     let title = el.title;
     let loadUrls = []
@@ -82,7 +82,7 @@ $(function () {
       `
     })
     let downLoadClass = loadUrls.length > 0 ? 'result-wrap result-wrap-download' : 'result-wrap'
-    
+
     let ctxstr = `
       <div class="right-title">
         <div class="right-title-h2">${title}</div>
@@ -92,7 +92,7 @@ $(function () {
         </div>
       </div>
       <div class="${downLoadClass}">
-        <div class="result-desc" style="font-size: 16px;"> 
+        <div class="result-desc" style="font-size: 16px;">
           ${desc}
         </div>
       </div>
@@ -174,7 +174,7 @@ $(function () {
       cityId = temp_id
       fetData()
     })
-  
+
     tap('.city-item', '.close', function ({event, target}) {
       event.preventDefault()
       event.stopPropagation()
@@ -212,13 +212,13 @@ $(function () {
             provDatas.push(pro)
           }
         })
-        
+
         let provStr = ``;
         provDatas.map((prov, index) => {
           provStr += `<li class="prov-item" data-id="${prov.pid}">${prov.provincial}</li>`;
         });
         $('.prov-list').empty().append(provStr).find('.prov-item').eq(0).addClass('active').siblings().removeClass('active');
-        
+
         tap('.prov-list', '.prov-item', function ({event, target}) {
           event.stopPropagation()
           event.preventDefault()
@@ -235,7 +235,7 @@ $(function () {
     })
   }
   getAllProv();
-  
+
   tap('.area-btn', function ({event}) {
     event.stopPropagation()
     event.preventDefault()

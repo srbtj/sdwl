@@ -43,14 +43,14 @@ import {tap} from './utils/tap'
         fetData();
       }
     });
-  
+
   }
   let contactDatas = []
   // 渲染数据
   let refreshData = function (datas, index = 0) {
     // let datas = getJoinUs();
     let result = datas.map(item => {
-      let pubtime = moment(item.date).format('YYYY-MM-DD');
+      let pubtime = moment(item.publishDate).format('YYYY-MM-DD');
       return `
         <li class="contact-item" data-id="${item.id}">
           <div class="contact-desc">${item.title}</div>
@@ -62,8 +62,8 @@ import {tap} from './utils/tap'
     $('.contact-list').empty().append(result);
     let el = datas[index];
     let desc = el.content;
-    let pubtime = moment(el.date).format('YYYY-MM-DD');
-    let count = el.coun || 0;
+    let pubtime = moment(el.publishDate).format('YYYY-MM-DD');
+    let count = el.watchTimes || 0;
     let title = el.title;
     let loadUrls = []
     let {url1, url2, url3, url4, url5} = el
@@ -72,7 +72,7 @@ import {tap} from './utils/tap'
     if (url3) loadUrls.push(url3)
     if (url4) loadUrls.push(url4)
     if (url5) loadUrls.push(url5)
-    
+
     let downLoadLi = loadUrls.map(url => {
       return `
         <li class="download-item">
@@ -213,10 +213,10 @@ import {tap} from './utils/tap'
             </div>
           </div>`
           return temp;
-    
+
         }).join('');
         $('.cummun-list').empty().append(str);
-    
+
         renderFont('ajax2')
         tap('.cummun-list', '.icon', function ({target}) {
           let parent = target.parents('.commun-item')
@@ -227,7 +227,7 @@ import {tap} from './utils/tap'
             parent.addClass('active').siblings().removeClass('active')
             target.addClass('icon-top').removeClass('icon-xiala')
             parent.siblings().find('.icon-arrow').removeClass('icon-top').addClass('icon-xiala')
-          }          
+          }
         })
       })
     })
