@@ -1,6 +1,6 @@
-// let prefix = 'http://10.192.34.31:9090'
+let prefix = 'http://10.192.34.31:9090'
 // let prefix = '/api'
-let prefix = 'http://39.108.5.62:9090'
+// let prefix = 'http://39.108.5.62:9090'
 // console.log(prefix);
 
 export const URLS = {

@@ -96,18 +96,22 @@ $(function () {
           ${desc}
         </div>
       </div>
-      <div class="download-word mobile-hide">
-        <div class="download-icon">
-          <i class="icon font_family icon-xiazai1"></i>
-          <span class="download-txt">附件下载</span>
-        </div>
-        <div class="download-list-wrap">
-            <ul class="download-list">
-              ${downLoadLi}
-            </ul>
-        </div>
-      </div>
     `;
+    if (downLoadLi.length > 0) {
+      ctxstr += `
+        <div class="download-word mobile-hide">
+          <div class="download-icon">
+            <i class="icon font_family icon-xiazai1"></i>
+            <span class="download-txt">附件下载</span>
+          </div>
+          <div class="download-list-wrap">
+              <ul class="download-list">
+                ${downLoadLi}
+              </ul>
+          </div>
+        </div>
+      `
+    }
     $('.contact-right-container').empty().append(ctxstr);
     $('.contact-list .contact-item').eq(index).addClass('active').siblings().removeClass('active');
     new PerfectScrollbar('.contact-right-container .result-wrap');

@@ -289,15 +289,15 @@
       .contact-right-container{
         // padding: 35px 40px 15px;
         .right-title{
-          padding: 35px 40px 0;
+          padding: 30px 40px 0;
         }
         .right-title-h2{
           font-size: $font-size-18;
           color: $nav-color-a;
-          line-height: 1;
+          line-height: 1.2;
         }
         .sub-title{
-          margin-top: 12px;
+          margin-top: 10px;
           font-size: $font-size-12;
           color: $contact-pub-time-color;
           > span:last-child{
@@ -336,6 +336,9 @@
         display: -webkit-box;
         display: -webkit-flex;
         display: flex;
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
         flex-direction: row;
         justify-content: flex-start;
         margin-top: 10px;
@@ -378,7 +381,7 @@
                 box-sizing: border-box;
                 font-size: $font-size-12;
                 max-width: 380px;
-                &:hover{  
+                &:hover{
                   text-decoration: underline;
                 }
               }

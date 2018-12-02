@@ -114,7 +114,7 @@
       font-size: $font-size;
     }
     .block-info{
-      width: 235px; 
+      width: 235px;
     }
     .desc{
       padding: 0 15px;
@@ -184,7 +184,7 @@
 }
 
 @media all and (max-width: $min-width-750){
- 
+
   .mobile-hide{
     display: none;
   }
@@ -348,7 +348,7 @@
         }
       }
 
-      
+
       .block-service{
         display: flex;
         flex-direction: row;
@@ -401,6 +401,7 @@
             top: px2rem(2);
             z-index: 10;
             color: $nav-bg-color;
+            font-size: px2rem(30);
           }
         }
       }

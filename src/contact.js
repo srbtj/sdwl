@@ -6,7 +6,8 @@ import './sass/vendors/myPagination.css';
 import Page from './vendors/myPagination';
 import PerfectScrollbar from 'perfect-scrollbar';
 import api from './fetch/api';
-import {changeScreen, mobileSlider, operateNav, renderFont} from './utils/urlFilter';
+import './vendors/loading'
+import {changeScreen, mobileSlider, operateNav, renderFont, loadingAnimate, removeLoading} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 (function ($) {
@@ -94,18 +95,22 @@ import {tap} from './utils/tap'
           ${desc}
         </div>
       </div>
-      <div class="download-word mobile-hide">
-        <div class="download-icon">
-          <i class="icon font_family icon-xiazai1"></i>
-          <span class="download-txt">附件下载</span>
-        </div>
-        <div class="download-list-wrap">
-            <ul class="download-list">
-              ${downLoadLi}
-            </ul>
-        </div>
-      </div>
     `;
+    if (downLoadLi.length > 0) {
+      contactStr += `
+        <div class="download-word mobile-hide">
+          <div class="download-icon">
+            <i class="icon font_family icon-xiazai1"></i>
+            <span class="download-txt">.附件下载</span>
+          </div>
+          <div class="download-list-wrap">
+              <ul class="download-list">
+                ${downLoadLi}
+              </ul>
+          </div>
+        </div>
+      `;
+    }
     $('.contact-right-container').empty().append(contactStr);
     // $('.result-desc').html(desc);
     // $('.sub-title-time').text(pubtime);
@@ -119,9 +124,9 @@ import {tap} from './utils/tap'
   // refreshData();
 
   let fetData = function () {
-    // loadingAnimate()
+    loadingAnimate()
     api.GetAllConnectUs({pageNo: pageObj.pageNo, pageSize: pageObj.pageSize}).then(res => {
-      // removeLoading()
+      removeLoading()
       if (res) {
         contactDatas = res.list || []
         if (contactDatas.length === 0) return

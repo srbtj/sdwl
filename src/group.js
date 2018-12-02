@@ -1,4 +1,5 @@
 import './sass/group.scss';
+import './img/dsj.png';
 import $ from 'jquery';
 import './btn-group';
 import './vendors/flexslider';
@@ -44,7 +45,7 @@ import api from './fetch/api';
                   <div class="event-title">
                     <span class="span-title">${key}</span>
                   </div>
-                <div class="month-event-list">  
+                <div class="month-event-list">
             `
 
             let events = datas[key].map(event => {
