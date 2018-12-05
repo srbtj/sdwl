@@ -206,7 +206,7 @@ $(function () {
   });
   // 更多新闻
   tap('.tab-header-more', function () {
-    window.location.href = 'news.html'
+    window.location.href = 'news.html?tab=2'
   })
 
   function floatAd () {

@@ -47,7 +47,8 @@
           max-height: 140px;
           min-height: 80px;
           margin-top: 15px;
-          overflow: hidden;
+          overflow: auto;
+          line-height: 1.5;
         }
       }
     }
@@ -127,7 +128,8 @@
           max-height: 140px;
           min-height: 80px;
           margin-top: 50px;
-          overflow: hidden;        
+          overflow: auto;
+          line-height: 1.5;        
         }
       }
     }

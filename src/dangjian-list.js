@@ -5,8 +5,7 @@ import Page from './vendors/myPagination';
 import api from './fetch/api';
 import * as CONST from './utils/const'
 import './vendors/loading'
-import {getQueryString} from './utils/urlFilter'
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont, getQueryString} from './utils/urlFilter';
 import moment from 'moment';
 import { tap } from './utils/tap';
 
