@@ -80,7 +80,7 @@ import moment from 'moment';
         </div>
       </div>
       <div class="news-eyes" data-id="${id}">
-        <i class="icon font_family icon-xinwenxiangxi"></i>
+        <i class="font_family icon-xinwenxiangxi"></i>
       </div>
     `;
 
@@ -90,7 +90,7 @@ import moment from 'moment';
       window.location.href = `news-detail.html?id=${id}`
     });
     renderFont('ajax2')
-    new PerfectScrollbar('.new-recommand-info .detail-ctx');
+    // new PerfectScrollbar('.new-recommand-info .detail-ctx');
   }
 
   let recommandNews = function (arr) {

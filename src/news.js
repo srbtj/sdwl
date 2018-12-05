@@ -8,7 +8,7 @@ import './sass/news.scss';
 import './btn-group';
 import './vendors/loading'
 import $ from 'jquery';
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont, getQueryString} from './utils/urlFilter';
 import * as CONST from './utils/const';
 import api from './fetch/api';
 import moment from 'moment';
@@ -26,6 +26,7 @@ import { tap } from './utils/tap';
   let pushNews = null;
   let tabIndex = -1;
   // 实例化列数据
+  let tab = +getQueryString('tab') || -1
   let initLi = function (obj, isPush) {
     let result = ``;
     if (obj) {
@@ -121,7 +122,7 @@ import { tap } from './utils/tap';
     }
   }
 
-  fetchNews();
+  fetchNews(tab === -1 ? '' : tab);
 
   // $('.news-info-list').on('click', '.news-info-item', function () {
   //   let dataId = $(this).attr('data-id');
@@ -159,5 +160,5 @@ import { tap } from './utils/tap';
   mobileSlider();
   // 导航栏
   operateNav();
-  $('.news-btn-group').btnGroup({});
+  $('.news-btn-group').btnGroup({index: tab === -1 ? 0 : tab});
 })($);
