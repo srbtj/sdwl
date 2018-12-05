@@ -49,7 +49,7 @@ import { tap } from './utils/tap';
               <div class="news-info-common news-info-desc">
                 <div class="news-title">${obj.title}</div>
                 <div class="news-sub mobile-hide">
-                  <span>浏览次数:<span class="numb">${obj.count || 0}</span></span>
+                  <span style="no-margin">浏览次数:<span class="numb">${obj.count || 0}</span></span>
                 </div>
                 <div class="new-detail mobile-hide">${newsAbstract}</div>
               </div>
