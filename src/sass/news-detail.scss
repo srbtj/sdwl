@@ -62,7 +62,7 @@
     margin-top: 5px;
     @include overflowHidden;
   }
-  
+
   .sub-title{
     margin-top: 20px;
     line-height: 1;
@@ -110,7 +110,7 @@
       cursor: pointer;
       transition: all .3s;
       .icon-xinwenxiangxi{
-        position: absolute;
+        position: relative;
         font-size: 30px;
         top: 0px;
       }

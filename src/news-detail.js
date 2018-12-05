@@ -15,7 +15,7 @@ import api from './fetch/api';
 import moment from 'moment';
 
 (function ($) {
-  
+
   let newsMap = CONST.newsMaps;
   let id = +getQueryString('id');
   let newsType = 0;
@@ -27,10 +27,11 @@ import moment from 'moment';
     let {type, publisher, count, title, content, date} = obj
     let times = moment(date).format('YYYY-MM-DD').split('-');
     let typeTxt = newsMap[type]
+    console.log(times)
     let result = `
       <div class="news-date mobile-hide">
         <div class="day">${times[2]}</div>
-        <div class="month">${CONST.monthMaps[times[1]]}</div>
+        <div class="month">${CONST.monthMaps[+times[1]]}</div>
         <div class="year">${times[0]}</div>
       </div>
       <div class="detail-right">
@@ -64,7 +65,7 @@ import moment from 'moment';
       <div class="new-recommand-info">
         <div class="news-date">
           <div class="day">${times[2]}</div>
-          <div class="month">${CONST.monthMaps[times[1]]}</div>
+          <div class="month">${CONST.monthMaps[+times[1]]}</div>
           <div class="year">${times[0]}</div>
         </div>
         <div class="news-like">
@@ -102,7 +103,7 @@ import moment from 'moment';
         </li>
       `;
     }).join('');
-    
+
     $('.news-recommand-list').empty().append(recStrs);
     $('.news-recommand-list').on('click', '.news-recommand-item', function () {
       let id = $(this).attr('data-id');
@@ -124,7 +125,7 @@ import moment from 'moment';
     })
   }
   fetchData(id)
-    
+
   // 改变变屏幕尺寸
   changeScreen();
   // 移动端侧边栏
