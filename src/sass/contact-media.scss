@@ -212,8 +212,10 @@
           .icon{
             position: absolute;
             right: px2rem(30);
-            top: px2rem(30);
+            top: 50%;
             font-size: px2rem(40);
+            margin-top: px2rem(-20);
+            line-height: 1;
             color: $nav-bg-color;
           }
         }
@@ -339,49 +341,51 @@
           }
           .icon{
             position: absolute;
-            right: px2rem(30);
+            // right: px2rem(30);
+            right: 0;
             top: px2rem(10);
             font-size: px2rem(40);
             color: $nav-bg-color;
+            width: px2rem(200);
+            text-align: right;
           }
         }
         .item-info{
           .item-sub,
           .item-desc{
-            font-size: px2rem(24);
             color: #333;
             line-height: 1.5;
           }
           .item-sub{
             width: px2rem(115);
-            
+            font-size: px2rem(24);
           }
           .item-desc{
             // flex: 1;
-            font-size: px2rem(24);
+            // font-size: px2rem(24);
             width: px2rem(440);
             // text-align: center;
-            .tel{
-              display: block;
+          }
+          .tel{
+            display: block;
+            position: relative;
+            border-radius: 999px;
+            height: px2rem(100);
+            line-height: px2rem(90);
+            background: $nav-bg-color;
+            width: px2rem(500);
+            text-align: center;
+            color: #fff;
+            margin: 5px auto;
+            font-size: px2rem(36) !important;
+            .icon{
+              // position: absolute;
+              // left: px2rem(55);
+              // top: 0;
               position: relative;
-              border-radius: 999px;
-              height: px2rem(100);
-              line-height: px2rem(90);
-              background: $nav-bg-color;
-              width: px2rem(500);
-              text-align: center;
-              color: #fff;
-              font-size: px2rm(36) !important;
-              margin: 5px auto;
-              .icon{
-                // position: absolute;
-                // left: px2rem(55);
-                // top: 0;
-                position: relative;
-                left: px2rem(-10);
-                top: px2rem(4);
-                font-size: px2rem(40);
-              }
+              left: px2rem(-10);
+              top: px2rem(4);
+              font-size: px2rem(40);
             }
           }
         }

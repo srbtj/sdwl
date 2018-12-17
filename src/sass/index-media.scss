@@ -254,7 +254,9 @@
   //   width: 500px;
   // }
   .logistic-train{
-    left: $index-lcb-width-980;
+    // left: $index-lcb-width-980;
+    left: 620px;
+    width: 430px;
     right: 0;
     .train-info{
       text-indent: 20px;
@@ -439,7 +441,8 @@
 
   .index-news-wrap{
     padding: px2rem(35) 0;
-    height: px2rem(198);
+    // height: px2rem(198);
+    height: px2rem(270);
     .news-img,
     .news-desc{
       height: px2rem(140);
@@ -451,7 +454,7 @@
       .img-link{
         display: block;
         width: px2rem(225);
-        height: px2rem(140);
+        height: px2rem(165);
       }
     }
     .news-desc .mobile-hide,
@@ -463,7 +466,14 @@
       width: px2rem(444);
       .news-title{
         font-size: px2rem(24);
-        line-height: 2;
+        line-height: 1.5;
+      }
+      .news-info{
+        margin-top: px2rem(20);
+      }
+      .news-info .news-info-span{
+        line-height: 1.5;
+        font-size: px2rem(24);
       }
     }
   }

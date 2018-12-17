@@ -156,7 +156,7 @@ export function removeLoading(loadingName){
 		$(".cpt-loading-mask").remove();
 	}else{
 		var name = loadingName || 'loadingName';
-		$(".cpt-loading-mask[data-name="+name+"]").remove();		
+		$(".cpt-loading-mask[data-name="+name+"]").remove();
 	}
 }
 
@@ -168,10 +168,4 @@ export function noData () {
   setTimeout(function () {
     $('.no-data').remove();
   }, 2000)
-}
-
-// 渲染ajax字体
-export function renderFont (name) {
-  let partName = name || "ajaxFont";
-  $youziku.submit(partName);
 }

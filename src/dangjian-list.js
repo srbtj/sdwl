@@ -5,12 +5,12 @@ import Page from './vendors/myPagination';
 import api from './fetch/api';
 import * as CONST from './utils/const'
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont, getQueryString} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, getQueryString} from './utils/urlFilter';
 import moment from 'moment';
 import { tap } from './utils/tap';
 
 $(function () {
-  
+
   $('.group-btn-group').btnGroup({
     index: +getQueryString('tab') - 1
   });
@@ -68,10 +68,9 @@ $(function () {
           `;
         }).join('');
         $('.dj-list').empty().append(str);
-        renderFont()
       })
     }
-    
+
     $('.btn-group .btn').each(function () {
       let title = $(this).attr('data-title');
       if (title === djTypeText) {

@@ -3,7 +3,7 @@ import $ from 'jquery';
 import api from './fetch/api';
 import {getQueryString, notNull, getDateInfo} from './utils/urlFilter'
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
 import moment from 'moment';
 import * as CONST from './utils/const'
 import './vendors/jquery.nice-scroll'
@@ -16,7 +16,9 @@ $(function () {
     let id = +getQueryString('id');
     if (notNull(id)) {
       let curParty = null;
+      loadingAnimate()
       api.GetPartyById({partyBuildId: id}).then(res => {
+        removeLoading()
         curParty = res
         if (curParty) {
           let pubtime = moment(curParty.date).format('YYYY-MM-DD')
@@ -44,7 +46,6 @@ $(function () {
               `
               }).join('');
               $('.item-tab-ctx').empty().append(relativeStr);
-              renderFont('ajax1')
               tap('.second-crumb, .item-tab .more', function () {
                 window.location.href=`dangjian-list.html?tab=${dj_type}`
               })
@@ -61,9 +62,11 @@ $(function () {
                 <div class="year">${times.year}</div>
               </div>
               <div class="news-like">
-                <div class="detail-title">${curParty.title}</div>
-                <div class="sub-title">
-                  <span class="sub-tite-common">浏览次数: <span class="scale-time">${curParty.viewTimes}</span></span>
+                <div class="news-like-wrap">
+                  <div class="detail-title">${curParty.title}</div>
+                  <div class="sub-title">
+                    <span class="sub-tite-common">浏览次数: <span class="scale-time">${curParty.viewTimes}</span></span>
+                  </div>
                 </div>
                 <div class="detail-ctx">
                     ${curParty.content}
@@ -71,7 +74,6 @@ $(function () {
               </div>
           `;
           $('.new-recommand-info').empty().append(result)
-          renderFont('ajax2')
           $(".news-like .detail-ctx").niceScroll({cursorborder:"",cursorcolor:"#position: relative;"});
         }
       })

@@ -3,7 +3,7 @@ import './img/dsj.png';
 import $ from 'jquery';
 import './btn-group';
 import './vendors/flexslider';
-import {changeScreen, mobileSlider, operateNav, getQueryString, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, getQueryString} from './utils/urlFilter';
 import api from './fetch/api';
 (function ($) {
   // let flexslider = {vars: {}};
@@ -12,7 +12,6 @@ import api from './fetch/api';
   let result = ''
   let initEventInfo = function () {
     $('.event-slides').append(result);
-    renderFont()
     $('.event-flexslider').flexslider({
       animation: "slide",
       animationLoop: true,
@@ -65,7 +64,6 @@ import api from './fetch/api';
           return yearStr
         }
         result = initData(maps)
-        loadData()
         if (tab === 1) {
           initEventInfo()
         }
@@ -74,6 +72,7 @@ import api from './fetch/api';
   }
 
   loadData();
+
   $('.group-btn-group').btnGroup({
     index: tab,
     cb: function (index) {

@@ -1,15 +1,15 @@
 import './sass/search.scss';
 import $ from 'jquery';
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData} from './utils/urlFilter';
 import {getQueryString} from './utils/urlFilter'
 import api from './fetch/api';
 import { tap } from './utils/tap';
 $(function () {
-   
+
   let title = getQueryString('title')
   let pagesObj = {
-    pageNo: 1, 
+    pageNo: 1,
     pageSize: 5,
     total: 1,
     pages: 1
@@ -45,7 +45,6 @@ $(function () {
         })
 
         $('.search-list-result').empty().append(str)
-        renderFont()
       }
     })
   }

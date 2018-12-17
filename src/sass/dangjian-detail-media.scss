@@ -6,20 +6,25 @@
     .news-like{
       width: 694px !important;
       // padding-right: 50px;
-      .detail-title{
-        margin-top: 20px;
-        @include overflowHidden;
-        line-height: 1;
-        font-size: $font-size-20;
-        color: $search-result-font-color;
-      }
-      .sub-title{
-        margin-top: 15px;
-        line-height: 1;
-        font-size: $font-size-12;
-        color: $contact-pub-time-color;
-        .ml{
-          margin-left: 10px;
+      .news-like-wrap{
+        position: relative;
+        height: 90px;
+        .detail-title{
+          margin-top: 5px;
+          // @include overflowHidden;
+          line-height: 1.2;
+          font-size: $font-size-20;
+          color: $search-result-font-color;
+        }
+        .sub-title{
+          position: absolute;
+          bottom: 15px;
+          line-height: 1;
+          font-size: $font-size-12;
+          color: $contact-pub-time-color;
+          .ml{
+            margin-left: 10px;
+          }
         }
       }
       .detail-ctx{
@@ -49,34 +54,42 @@
     }
     .news-like{
       width: 470px !important;
-      .detail-title{
-        margin-top: 5px;
-        @include overflowHidden;
-        line-height: 1;
-        font-size: $font-size-20;
-        color: $search-result-font-color;
-      }
-      .sub-title{
-        margin-top: 15px;
-        line-height: 1;
-        font-size: $font-size-12;
-        color: $contact-pub-time-color;
-        .ml{
-          margin-left: 10px;
+      .news-like-wrap{
+        position: relative;
+        left: 105px;
+        width: 470px;
+        height: 90px;
+        .detail-title{
+          margin-top: 5px;
+          // @include overflowHidden;
+          line-height: 1.2;
+          font-size: $font-size-20;
+          color: $search-result-font-color;
+        }
+        .sub-title{
+          position: absolute;
+          bottom: 15px;
+          // margin-top: 15px;
+          line-height: 1;
+          font-size: $font-size-12;
+          color: $contact-pub-time-color;
+          .ml{
+            margin-left: 10px;
+          }
         }
       }
-      .detail-title,
-      .sub-title{
-        width: 470px;
-        margin-left: 105px;
-      }
+      // .detail-title,
+      // .sub-title{
+      //   width: 470px;
+      //   margin-left: 105px;
+      // }
       .detail-ctx{
         width: 596px;
         // max-height: 140px;
         // min-height: 80px;
-        margin-top: 50px;
+        // margin-top: 50px;
         padding-right: 50px;
-        // overflow: hidden;        
+        // overflow: hidden;
       }
     }
   }

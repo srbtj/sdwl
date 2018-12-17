@@ -21,8 +21,7 @@ const webpackDev = { // 开发配置文件
         useLocalIp: true, // 使用本机IP打开devServer，而不是localhost
         proxy: {
             '/api': {
-                target: 'http://39.108.5.62:9090/',
-                // targte: 'http://10.192.34.31',
+                target: 'http://www.sdgswl.com/',
                 pathRewrite: {'^/api': ''},
                 secure: false,
                 changeOrigin: true

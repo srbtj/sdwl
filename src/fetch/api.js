@@ -8,7 +8,7 @@ axios.defaults.timeout = 50000
 // 表单提交 post 方式
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // 提交 url
-axios.defaults.baseUrl = URLS.BASEURL
+// axios.defaults.baseUrl = URLS.BASEURL
 
 axios.interceptors.request.use((config) => {
   // post 提交时 将请求数据 序列化
@@ -73,6 +73,23 @@ export default {
   LoadEvents ({pageNo, pageSize}) {
     let urls = `${URLS.LOADEVENTS}?pageNo=${pageNo}&pageSize=${pageSize}`
     return fetch(urls);
+  },
+  // 获取所有业务领域
+  GetAllBusiness ({pageNumber, pageSize}) {
+    let urls = `${URLS.GETALLBUSINESS}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return fetch(urls);
+  },
+  GetBusinessById ({id}) {
+    let urls = `${URLS.GETBUSINESSBYID}?businessScopeId=${id}`
+    return fetch(urls)
+  },
+  GetAllCar ({pageNo, pageSize, companyId}) {
+    let urls = `${URLS.GetAllCarList}?pageNo=${pageNo}&pageSize=${pageSize}&companyId=${companyId}`;
+    return fetch(urls)
+  },
+  GetCarType ({pageNo, pageSize, carId}) {
+    let urls = `${URLS.GetCarTypeById}?pageNo=${pageNo}&pageSize=${pageSize}&carId=${carId}`;
+    return fetch(urls)
   },
   // 新闻
   GetAllNewsByPage ({pageNo, pageSize, title}) {

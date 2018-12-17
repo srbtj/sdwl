@@ -10,12 +10,13 @@ import './img/business-7.png';
 import './img/business-8.png';
 import './img/business-9.png';
 import {getQueryString} from './utils/urlFilter'
+import api from './fetch/api';
+// import './vendors/loading'
 import {changeScreen, mobileSlider, operateNav} from './utils/urlFilter';
 import {tap} from './utils/tap'
 (function ($) {
-  
+
    /** 计算右边距离 */
-  //  console.log($('.tab-right-bg').offset().left);
    // 导航栏操作
    function initCalc () {
      if (!$('.child-list').offset()) return;
@@ -33,6 +34,14 @@ import {tap} from './utils/tap'
   });
    initCalc();
 
+   function startMove (index, target) {
+      target.addClass('active').siblings().removeClass('active');
+      $('body > .business-tab .tab-header').eq(index).addClass('active').siblings().removeClass('active');
+      let trans_top = index > 0 ? arr[index] - 80 : 0;
+      $('html , body').animate({scrollTop: trans_top}, 300);
+      index > 0 ? $('body > .business-tab').css({top: 0}) : $('body > .business-tab').css({top: -200});
+    }
+
   let tab1 = $('.tab-1');
   let tab2 = $('.tab-2');
   let tab3 = $('.tab-3');
@@ -44,7 +53,7 @@ import {tap} from './utils/tap'
   let tab4_top = tab4.offset().top;
   let tab5_top = tab5.offset().top;
   let arr = [tab1_top, tab2_top, tab3_top, tab4_top, tab5_top];
-  
+
   let cloneCache = null;
   if (!cloneCache) cloneCache = $('.business-tab').clone(true);
   $('body').append($(cloneCache)).addClass('clone-tab');
@@ -81,65 +90,255 @@ import {tap} from './utils/tap'
 
   $('html , body').animate({scrollTop: 0},300);
 
-  let logoArrs = [
-    'icon-laosilaisi', 'icon-binli', 'icon-benchi',
-    'icon-baoma', 'icon-aodi', 'icon-luhu', 'icon-dazhong'
-  ];
-  let logoLi = logoArrs.map(item => {
-    return `
-      <li class="logo-item">
-        <i class="icon font_family ${item}"></i>
-      </li>
-    `;
-  })
-  $('.car-logo-list').append(logoLi.join(''));
-
-  let startMove = function (index, target) {
-    target.addClass('active').siblings().removeClass('active');
-    $('body > .business-tab .tab-header').eq(index).addClass('active').siblings().removeClass('active');
-    let trans_top = index > 0 ? arr[index] - 80 : 0;
-    $('html , body').animate({scrollTop: trans_top}, 300);
-    index > 0 ? $('body > .business-tab').css({top: 0}) : $('body > .business-tab').css({top: -200});
-  }
   // 获取地址栏参数
   let currentTab = getQueryString('tab');
   if ((currentTab !== undefined && currentTab !== null)) {
     // console.log(currentTab);
     startMove(currentTab, $('.business-tab .tab-header'));
   }
+  function initTabTop () {
+    // 更多详情
+    $('.block-btn, .desc-btn').on('click', function () {
+      let tab = $(this).attr('data-tab');
+      let id = $(this).attr('data-id');
+      let carDetail = $(this).attr('data-car')
+      if (carDetail)  window.location.href = `business-car.html?id=${id}&tab=${tab}`;
+      else window.location.href = `business-detail.html?id=${id}&tab=${tab}`;
+    })
 
-  // 更多详情
-  $('.block-btn, .desc-btn').on('click', function () {
-    // let tab = $(this).attr('data-tab');
-    let id = $(this).attr('data-id');
-    if (+id === 7)  window.location.href = `business-car.html?id=${id}`;
-    else window.location.href = `business-detail.html?id=${id}`;
-  })
-  // 车系详情
-  $('.car-info .car-more').on('click', function () {
-    // let tab = $(this).attr('data-tab');
-    let id = $(this).attr('data-id');
-    if (+id === 7)  window.location.href = `business-car.html?id=${id}`;
-    else window.location.href = `business-car.html?id=${id}`;
-  })
+    // 播放视频
+    $('.play-model').on('click', function () {
+      $('#play').animate({top: 0}, 300);
+    })
+    $('#play .close-video').on('click', function () {
+      $('#myVideo').get(0).pause();
+      $('#play').animate({top: '-100%'}, 300);
+    })
 
-  // 播放视频
-  $('.play-model').on('click', function () {
-    $('#play').animate({top: 0}, 300);
-  })
-  $('#play .close-video').on('click', function () {
-    $('#myVideo').get(0).pause();
-    $('#play').animate({top: '-100%'}, 300);
-  })
+    tap('.show-detail .icon', function ({target}) {
+      !target.hasClass('icon-top') ? target.addClass('icon-top') : target.removeClass('icon-top')
+      let parent = target.parents('.block-info')
+      let childTarget = parent.find('.block-img, .desc')
+      childTarget.hasClass('mobile-toggle-show') ? childTarget.removeClass('mobile-toggle-show') :
+      childTarget.addClass('mobile-toggle-show')
+    })
 
-  tap('.show-detail .icon', function ({target}) {
-    !target.hasClass('icon-top') ? target.addClass('icon-top') : target.removeClass('icon-top')
-    let parent = target.parents('.block-info')
-    let childTarget = parent.find('.block-img, .desc')
-    childTarget.hasClass('mobile-toggle-show') ? childTarget.removeClass('mobile-toggle-show') :
-    childTarget.addClass('mobile-toggle-show')
-  })
+  }
+
+  function initPerson (person, type) {
+    let personInfo = person.companyPrincipals.map((phone, index) => {
+      if (index > 0) return ''
+      let phoneArr = []
+      if (phone.phone1) phoneArr.push(phone.phone1)
+      if (phone.phone2) phoneArr.push(phone.phone2)
+      let pc = ``;
+      let mobile = ``;
+      phoneArr.map(p => {
+        pc += `<span class="number">${p}</span>`
+        mobile += `
+          <span class="phone-number-span">
+            <a class="number" href="tel: ${p}"><i class="icon font_family icon-dianhua"></i>${p}</a>
+          </span>
+        `
+      })
+      return `
+        <div class="block-service mobile-hide">
+          <span class="block-scale">${type}</span>
+          <div class="block-phone">
+            <span class="name">${phone.name}</span>
+            <span class="phone-numb">
+                ${pc}
+            </span>
+          </div>
+        </div>
+        <div class="block-service mobile-show">
+            <span class="block-scale">${type}</span>
+            <div class="block-phone">
+              <span class="name">${phone.name}</span>
+              <span class="phone-numb">
+                 ${mobile}
+              </span>
+            </div>
+        </div>`
+    }).join('')
+    return personInfo;
+  }
+  /**
+   *
+   * @param {*} target 目标对象
+   * @param {*} arr 公司数组
+   * @param {*} tabType 标签类型 0, 1, 2, 3, 4
+   * @param {*} businessType 业务类型: 业务洽谈|业务客服
+   * @param {*} moreInfo 更多: 园区详情|更多详情
+   */
+  function initCompany (target, arr, tabType, businessType, moreInfo) {
+    let oneObj = arr[0]
+    let twoObj = arr[1]
+    let personOneInfo = initPerson(oneObj, businessType)
+    let personTwoInfo = initPerson(twoObj, businessType)
+    let one = `
+      <div class="block-info">
+        <div class="block-title">
+          <span>${oneObj.companyName}</span>
+          <span class="show-detail mobile-show">
+            <i class="icon font_family icon-xiala"></i>
+          </span>
+        </div>
+        <div class="block-img mobile-toggle-hide">
+            <img src="${oneObj.companyImage}" />
+        </div>
+        <div class="desc mobile-toggle-hide">
+          ${oneObj.companyAbstract}
+        </div>
+        <div class="block-btn mobile-hide" data-tab="${tabType}" data-id="${oneObj.id}">${moreInfo} 》</div>
+        ${personOneInfo}
+      </div>
+    `
+    let twoImg = ``;
+    let carDetail = false;
+    if (twoObj.companyName === '山东高速奥维俊杉平行进口车') {
+      carDetail = true;
+      twoImg = `
+        <img src="${twoObj.companyImage}" />
+        <div class="play-model">
+          <i class="icon font_family icon-bofang"></i>
+        </div>
+      `
+    } else {
+      twoImg = `<img src="${twoObj.companyImage}" />`
+    }
+    let two = `
+      <div class="block-info title-another">
+        <div class="block-title">
+          <span>${twoObj.companyName}</span>
+          <span class="show-detail mobile-show">
+              <i class="icon font_family icon-xiala"></i>
+            </span>
+        </div>
+        <div class="block-img mobile-toggle-hide">
+            ${twoImg}
+        </div>
+        <div class="desc mobile-toggle-hide">
+          ${twoObj.companyAbstract}
+        </div>
+        <div class="block-btn"  data-tab="${tabType}" data-id="${twoObj.id}" data-car="${carDetail}">${moreInfo} 》</div>
+        ${personTwoInfo}
+      </div>
+    `
+    $(target).empty().append(one).append(two);
+  }
+  function initTab1 (arr) {
+    initCompany('.tab-1 .tab-body-right', arr, 0, '业务洽谈', '园区详情')
+  }
+  function initTab2 (arr) {
+    initCompany('.tab-2 .tab-body-right', arr, 1, '业务客服', '更多详情')
+  }
+  function initTab3 (arr) {
+    initCompany('.tab-3 .tab-body-right', arr, 2, '业务洽谈', '更多详情')
+  }
+  function initTab4 (arr) {
+    initCompany('.tab-4 .tab-body-right', arr, 3, '业务洽谈', '更多详情')
+  }
+  function initTab5 (obj) {
+    let pcPerson = ``,
+        mobilePerson = ``;
+    obj.companyPrincipals.map((person, index) => {
+      let bT = index === 0 ? '业务洽谈' : '生产洽谈'
+      pcPerson += `
+        <div class="server-common">
+          <span class="block-scale">${bT}</span>
+          <div class="block-phone">
+            <span class="name">${person.name}</span>
+            <span class="number">${person.phone1}</span>
+          </div>
+        </div>
+      `
+      mobilePerson += `
+        <div class="server-common">
+          <span class="block-scale">${bT}</span>
+          <div class="block-phone">
+            <span class="name">${person.name}</span>
+            <span class="phone-number-span">
+              <a class="number" href="tel: ${person.phone1}"><i class="icon font_family icon-dianhua"></i>${person.phone1}</a>
+            </span>
+            <!-- <span class="number">${person.phone1}</span> -->
+          </div>
+      </div>
+      `
+    });
+    let personInfo = `
+      <div class="right-server mobile-hide">
+        ${pcPerson}
+      </div>
+      <div class="right-server mobile-show">
+        ${mobilePerson}
+      </div>
+    `;
+    let ctx = `
+      <div class="right-title">
+        <span class="title-span">${obj.companyName}</span>
+      </div>
+      <div class="gk-img">
+        <img class="block-img-8" src="${obj.companyImage}" />
+      </div>
+      <div class="right-desc">
+        <span class="desc-info">
+          ${obj.companyAbstract}
+        </span>
+        <span class="desc-btn mobile-hide" data-tab="4" data-id="${obj.id}">更多详情 》</span>
+      </div>
+      ${personInfo}
+    `
+
+    $('.tab-5 .tab-body-right').empty().append(ctx);
+  }
+
+  function fetchData () {
+    // loadingAnimate();
+    api.GetAllBusiness({pageNumber: 1, pageSize: 999}).then(res => {
+      // removeLoading();
+      let tab1Temp = []
+      let tab2Temp = []
+      let tab3Temp = []
+      let tab4Temp = []
+      let tab5Temp = []
+      let {list = []} = res;
+      if (list.length > 0) {
+        list.map(item => {
+          switch (+item.companyType) {
+            case 1:
+              tab1Temp.push(item);
+              break;
+            case 2:
+              tab2Temp.push(item);
+              break;
+            case 3:
+              tab3Temp.push(item);
+              break;
+            case 4:
+              if (item.companyName === '山东高速奥维俊杉平行进口车') {
+                tab4Temp[1] = item
+              } else {
+                tab4Temp[0] = item
+              }
+              break;
+            case 5:
+              tab5Temp.push(item);
+              break;
+          }
+        })
+      }
+      initTab1(tab1Temp)
+      initTab2(tab2Temp)
+      initTab3(tab3Temp)
+      initTab4(tab4Temp)
+      initTab5(tab5Temp[0])
+      initTabTop();
+    })
+  }
+  fetchData();
   changeScreen();
   mobileSlider();
   operateNav();
+  // fetchData();
 })($);

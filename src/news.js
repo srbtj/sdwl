@@ -8,7 +8,7 @@ import './sass/news.scss';
 import './btn-group';
 import './vendors/loading'
 import $ from 'jquery';
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont, getQueryString} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, getQueryString} from './utils/urlFilter';
 import * as CONST from './utils/const';
 import api from './fetch/api';
 import moment from 'moment';
@@ -88,7 +88,6 @@ import { tap } from './utils/tap';
 
     if (pageObj.pageNo === 1) $('.news-info-list').empty().append(result)
     else $('.news-info-list').append(result)
-    renderFont()
   }
   let fetchNews = function (type) {
     loadingAnimate();

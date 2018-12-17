@@ -54,29 +54,39 @@
   }
 
 .detail-right{
-  .detail-title{
-    line-height: 1;
-    font-size: $font-size-20;
-    color: $search-result-font-color;
-    font-weight: 500;
-    margin-top: 5px;
-    @include overflowHidden;
-  }
+  .detail-title-wrap{
+    position: relative;
+    height: 90px;
+    .detail-title{
+      line-height: 1;
+      font-size: $font-size-20;
+      color: $search-result-font-color;
+      font-weight: 500;
+      margin-top: 5px;
+      // @include overflowHidden;
+      line-height: 1.2;
+    }
 
-  .sub-title{
-    margin-top: 20px;
-    line-height: 1;
-    font-size: $font-size-12;
-    color: $contact-pub-time-color;
-    .ml{
-      margin-left: 10px;
+    .sub-title{
+      position: absolute;
+      bottom: 15px;
+      // margin-top: 20px;
+      line-height: 1;
+      font-size: $font-size-12;
+      color: $contact-pub-time-color;
+      .ml{
+        margin-left: 10px;
+      }
     }
   }
+
   .detail-ctx{
     position: relative;
-    height: 800px;
+    // height: 800px;
+    min-height: 300px;
+    max-height: 800px;
     overflow-y: auto;
-    margin-top: 35px;
+    margin-top: 5px;
     font-size: $font-size;
     line-height: 1.5;
     padding-bottom:

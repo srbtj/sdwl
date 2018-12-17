@@ -74,6 +74,9 @@
     .dj-item.active{
       color: #fff;
       background-color: $banner-bg-color-dj;
+      .item-time{
+        color: #fff;
+      }
     }
   }
   .pagination{
@@ -84,6 +87,7 @@
     ul li:hover{
       background-color: $dj-font-color;
       color: #fff;
+
     }
     li.active{
       background: $dj-font-color;

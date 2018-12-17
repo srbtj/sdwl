@@ -9,7 +9,7 @@ import './img/float_ad.png';
 import './img/oybl-mobile.png';
 import './vendors/loading'
 // 移动端改变html字体大小
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 import api from './fetch/api'
@@ -36,31 +36,32 @@ $(function () {
         `;
       }).join('');
     $('.news-list').empty().append(notices);
-    renderFont('ajax1')
   });
   // 推送新闻
   loadNewsByType({pageNo: 1, pageSize: 1, type: 1, isPush: true}, function (data) {
     // console.log('推送新闻', data);
     let tops = data.map(item => {
       let img_info = item.url || './img/news-default.png'
+      let abstract = $('html, boyd').get(0).offsetWidth <= 750 ?
+        (item.newsAbstract.length > 50 ? item.newsAbstract.substring(0, 50) + '...' : item.newsAbstract)
+        : (item.newsAbstract.length > 300 ? item.newsAbstract.substring(0, 300) + '...' : item.newsAbstract.substring(0, 300) );
       $('.news-img .push-img').attr({src: img_info})
       $('.news-img .img-link').attr({href: `news-detail.html?id=${item.id}`})
       return `
         <h2 class="news-title">
-          <a href="news.html?id=${item.id}">${item.title}</a>
+          <a href="news-detail.html?id=${item.id}">${item.title}</a>
         </h2>
-        <div class="news-info mobile-hide">
+        <div class="news-info">
           <span class="news-info-span">
-            ${item.newsAbstract}
+            ${abstract}
           </span>
         </div>
       `;
     }).join('');
     $('.index-news-wrap .news-desc').empty().append(tops)
-    renderFont('ajax2')
   });
-  // 加载行业动态
-  loadNewsByType({pageNo: 1, pageSize: 3, type: 2, isPush: false}, function (data) {
+  // 加载集团新闻
+  loadNewsByType({pageNo: 1, pageSize: 6, type: 1, isPush: false}, function (data) {
     let orgs = data.map(item => {
       let pubtime = moment(item.date).format('YYYY-MM-DD')
       return  `
@@ -73,8 +74,28 @@ $(function () {
       `;
     }).join('');
     $('.jtxw').empty().append(orgs);
-    renderFont('ajax3')
   });
+  // 加载行业动态
+  loadNewsByType({pageNo: 1, pageSize: 6, type: 2, isPush: false}, function (data) {
+    let orgs = data.map(item => {
+      let pubtime = moment(item.date).format('YYYY-MM-DD')
+      return  `
+      <li class="tab-body-item" data-id="${item.id}">
+        <a class="link-color"  href="javascript:;">
+          <span class="item-time">${pubtime}</span>
+          <span class="item-desc">${item.title}</span>
+        </a>
+      </li>
+      `;
+    }).join('');
+    $('.mtxw').empty().append(orgs);
+  });
+  // 新闻
+  tap('.tab-header', '.tab-header-title', function ({target}) {
+    target.addClass('active').siblings().removeClass('active');
+    let index = target.index()
+    $('.tab-body').eq(index).show().siblings('.tab-body').hide()
+  })
   // 业务
   tap('.business-wrap', '.business-item', function ({event, target}) {
     let index = target.index()
@@ -82,16 +103,16 @@ $(function () {
       $('#blPageMobile').removeClass('oyblHide').addClass('oyblShow')
     } else {
       window.location.href = `business.html?tab=${index}`
-    } 
+    }
   })
   tap('#blPageMobile', '.bl-close', function () {
     $('#blPageMobile').removeClass('oyblShow')
   })
   // 大事件
   let bigEvents = function (cb) {
-    api.GetBigEvents({pageNo: 1, pageSize: 100, simple: true}).then(res => {
-      if (res.list) cb && cb(res.list)
-    })
+    // api.GetBigEvents({pageNo: 1, pageSize: 100, simple: true}).then(res => {
+    //   if (res.list) cb && cb(res.list)
+    // })
   }
   bigEvents(function (data) {
     let maps = {}
@@ -125,7 +146,6 @@ $(function () {
 
       $('.year-list').append(yearStr);
       $('.data-list').append(eventStr);
-      renderFont('ajax4')
       $('.year-flexslider').flexslider({
         animation: "slide",
         controlNav: false,
@@ -177,7 +197,7 @@ $(function () {
       }else{
         $('.back-top').fadeOut(500);
       }
-    });    
+    });
     tap('.back-top', function () {
       $("html,body").animate({scrollTop:0},"fast");
     })
@@ -209,64 +229,89 @@ $(function () {
     window.location.href = 'news.html?tab=2'
   })
 
-  function floatAd () {
-    var x = 0,y = 0
-    var xin = true, yin = true
-    var step = 1
-    var delay = 10
-    var obj=document.getElementById("floatAd")
-    if (!obj) return;
-    var userAgent=navigator.userAgent;
-    function floatwww_qpsh_com() {
-      var L=0, T=0;
+  function FloatAd(selector) {
+    let offsetWidth = $('html, boyd').get(0).offsetWidth;
+    if (offsetWidth <= 750) return;
+    var obj = $(selector);
+    if (obj.find(".item").length == 0) return;//如果没有内容，不执行
+    var windowHeight = $(window).height();//浏览器高度
+    var windowWidth = $(window).width();//浏览器宽度
+    var dirX = -1.5;//每次水平漂浮方向及距离(单位：px)，正数向右，负数向左，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
+    var dirY = -1;//每次垂直漂浮方向及距离(单位：px)，正数向下，负数向上，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
 
-      var R= document.body.clientWidth-obj.offsetWidth
-      var B;
-      //var B = document.body.clientHeight-obj.offsetHeight
-      if(userAgent.indexOf("Chrome") > -1)
-      {
-        B= window.innerHeight+document.documentElement.scrollTop-obj.offsetHeight;
-      }
-      else
-      {
-        B=document.documentElement.clientHeight+document.documentElement.scrollTop-obj.offsetHeight;
-      }
-      T=document.documentElement.scrollTop;
-      obj.style.left = x + document.body.scrollLeft+"px"
-      obj.style.top = y + document.body.scrollTop+"px"
-      x = x + step*(xin?1:-1)
-      if (x < L) { xin = true; x = L}
-      if (x > R){ xin = false; x = R}
-      y = y + step*(yin?1:-1)
-      if (y < T) { yin = true; y = T }
-      if (y > B) { yin = false; y = B }
+    var delay = 30;//定期执行的时间间隔，单位毫秒
+    obj.css({ left: windowWidth / 2 - obj.width() / 2 + "px", top: windowHeight / 2 - obj.height() / 2 + "px" });//把元素设置成在页面中间
+    obj.show();//元素默认是隐藏的，避免上一句代码改变位置视觉突兀，改变位置后再显示出来
+    var handler = setInterval(move, delay);//定期执行，返回一个值，这个值可以用来取消定期执行
+
+    obj.hover(function() {//鼠标经过时暂停，离开时继续
+        clearInterval(handler);//取消定期执行
+    }, function() {
+        handler = setInterval(move, delay);
+    });
+
+    obj.find(".ad-close").click(function() {//绑定关闭按钮事件
+        close();
+    });
+    $(window).resize(function() {//当改变窗口大小时，重新获取浏览器大小，以保证不会过界（飘出浏览器可视范围）或漂的范围小于新的大小
+        windowHeight = $(window).height();//浏览器高度
+        windowWidth = $(window).width();//浏览器宽度
+    });
+
+    obj.on('click', function () {
+      $('#blPage').show();
+      $(this).hide()
+    });
+    function move() {//定期执行的函数，使元素移动
+        var currentPos = obj.position();//获取当前位置，这是JQuery的函数，具体见：http://hemin.cn/jq/position.html
+        var nextPosX = currentPos.left + dirX;//下一个水平位置
+        var nextPosY = currentPos.top + dirY;//下一个垂直位置
+
+        if (nextPosX >= windowWidth - obj.width()) {//这一段是本站特有的需求，当漂浮到右边时关闭漂浮窗口，如不需要可删除
+            close();
+        }
+
+        if (nextPosX <= 0 || nextPosX >= windowWidth - obj.width()) {//如果达到左边，或者达到右边，则改变为相反方向
+            dirX = dirX * -1;//改变方向
+            nextPosX = currentPos.left + dirX;//为了不过界，重新获取下一个位置
+        }
+        if (nextPosY <= 0 || nextPosY >= windowHeight - obj.height() - 5) {//如果达到上边，或者达到下边，则改变为相反方向。
+            dirY = dirY * -1;//改变方向
+            nextPosY = currentPos.top + dirY;//为了不过界，重新获取下一个位置
+        }
+        obj.css({ left: nextPosX + "px", top: nextPosY + "px" });//移动到下一个位置
     }
-    var itl= setInterval(function () {
-      floatwww_qpsh_com()
-    }, delay)
-    obj.onmouseover=function(){clearInterval(itl)}
-    obj.onmouseout=function(){itl=setInterval(function () {
-      floatwww_qpsh_com()
-    }, delay)}
-    tap('#floatAd', '.ad-close', function ({event, target}) {
-      event.preventDefault()
-      event.stopPropagation()
-      $('#floatAd').remove()
-    })
-    tap('#floatAd', function () {
-      $(this).remove()
-      $('#blPage').show()
-    })
+
+    function close() {//停止漂浮，并销毁漂浮窗口
+        clearInterval(handler);
+        obj.remove();
+    }
   }
 
   function scrollToTrget () {
-    let tops =  $('.logistic-wrap').offset().top;
+    let el =  $('.business-wrap').get(0);
+    let offsetTop = 0;
+    let currentEl = el;
+    while (currentEl.offsetParent) {
+      offsetTop += currentEl.offsetTop;
+      currentEl = currentEl.offsetParent;
+    };
     $('html, body').stop();
-    $('html, body').animate({scrollTop: tops - 60}, 1000);
+    let offsetWidth = $('html, boyd').get(0).offsetWidth;
+    if (offsetWidth > 1190) {
+      $('html, body').animate({scrollTop: offsetTop + 25}, 1000);
+    } else if (offsetWidth > 750 && offsetTop <= 1190) {
+      $('html, body').animate({scrollTop: offsetTop + 76}, 1000);
+    } else if (offsetWidth > 480 && offsetTop <= 750){
+      $('html, body').animate({scrollTop: offsetTop - 200}, 1000);
+    } else {
+      $('html, body').animate({scrollTop: offsetTop - 350}, 1000);
+    }
   }
   scrollToTrget();
-  floatAd();
   changeScreen();
   mobileSlider();
   operateNav();
+
+  FloatAd('#floatAd')
 });

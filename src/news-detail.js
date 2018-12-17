@@ -9,7 +9,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import {getQueryString} from './utils/urlFilter'
 // import {getNews} from './fetch/news'
 // import {getDateInfo} from './utils/urlFilter'
-import {changeScreen, mobileSlider, operateNav, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav} from './utils/urlFilter';
 import * as CONST from './utils/const';
 import api from './fetch/api';
 import moment from 'moment';
@@ -27,7 +27,6 @@ import moment from 'moment';
     let {type, publisher, count, title, content, date} = obj
     let times = moment(date).format('YYYY-MM-DD').split('-');
     let typeTxt = newsMap[type]
-    console.log(times)
     let result = `
       <div class="news-date mobile-hide">
         <div class="day">${times[2]}</div>
@@ -35,11 +34,14 @@ import moment from 'moment';
         <div class="year">${times[0]}</div>
       </div>
       <div class="detail-right">
-        <div class="detail-title">${title}</div>
-        <div class="sub-title mobile-hide">
-          <span class="sub-tite-common">发布者: <span class="pub-name">${publisher}</span></span>
-          <span class="sub-tite-common ml">浏览次数: <span class="scale-time">${count}</span></span>
+        <div class="detail-title-wrap">
+          <div class="detail-title">${title}</div>
+          <div class="sub-title">
+            <span class="sub-tite-common">发布者: <span class="pub-name">${publisher || '物流集团'}</span></span>
+            <span class="sub-tite-common ml">浏览次数: <span class="scale-time">${count}</span></span>
+          </div>
         </div>
+
         <div class="detail-ctx">
             ${content}
         </div>
@@ -47,7 +49,6 @@ import moment from 'moment';
     `;
     $('.news-detail').empty().append(result);
     $('.second-crumb').text(typeTxt);
-    renderFont('ajax1')
     // new PerfectScrollbar('.detail-right .detail-ctx');
   }
   let fetchData = function (id) {
@@ -71,7 +72,7 @@ import moment from 'moment';
         <div class="news-like">
           <div class="detail-title">${title}</div>
           <div class="sub-title">
-            <span class="sub-tite-common">发布者: <span class="pub-name">${publisher}</span></span>
+            <span class="sub-tite-common">发布者: <span class="pub-name">${publisher || '物流集团'}</span></span>
             <span class="sub-tite-common ml">浏览次数: <span class="scale-time">${count}</span></span>
           </div>
           <div class="detail-ctx">
@@ -89,7 +90,6 @@ import moment from 'moment';
       let id = $(this).attr('data-id');
       window.location.href = `news-detail.html?id=${id}`
     });
-    renderFont('ajax2')
     // new PerfectScrollbar('.new-recommand-info .detail-ctx');
   }
 
@@ -109,7 +109,6 @@ import moment from 'moment';
       let id = $(this).attr('data-id');
       window.location.href = `news-detail.html?id=${id}`
     })
-    renderFont('ajax3')
   }
   let fetchLikeNews = function ({type}) {
     api.GetAllNewsByTypeAndPage({pageNo: 1, pageSize: 8, type, isPush: ''}).then(res => {
@@ -117,8 +116,8 @@ import moment from 'moment';
       for (let k in list) {
         let el = list[k]
         if (el.id === curNews.id) continue;
-        if (!likeNews) likeNews = el;
-        likeNewsArr.push(el);
+        if (!likeNews) likeNews = el
+        else likeNewsArr.push(el);
       }
       initLikeNews(likeNews);
       recommandNews(likeNewsArr);

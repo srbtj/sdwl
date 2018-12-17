@@ -46,15 +46,24 @@
   }
 }
 #floatAd{
+  display: none;
   position: absolute;
   left: 0;
   top: 0;
-  background: url(../img/float_ad.png) center no-repeat;
   background-size: contain;
   width: 442px;
   height: 190px;
   z-index: 9999;
   cursor: pointer;
+  .item{
+    display: block;
+    width: 442px;
+    height: 190px;
+    .item-img{
+      width: 100%;
+      height: 100%;
+    }
+  }
   .ad-close{
     position: absolute;
     right: 0;
@@ -274,7 +283,7 @@
     .img-link{
       display: block;
       width: 260px;
-      height: 140px;
+      height: 190px;
     }
     img{
       width: 100%;

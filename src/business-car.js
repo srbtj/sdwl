@@ -2,6 +2,10 @@ import './sass/business-car.scss';
 import $ from 'jquery';
 import './vendors/flexslider';
 import {getQueryString, notNull} from './utils/urlFilter'
+import api from './fetch/api';
+import './vendors/loading'
+import {operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
+
 import './img/bc_01.jpg';
 import './img/bc_02.jpg';
 import './img/bc_03.jpg';
@@ -224,7 +228,7 @@ import './img/dz_02.jpg';
               volume: '',
               opera: '',
               info: '3.0T 8速手自一体变速箱 奥迪侧向辅助、四区空调、电动转向柱辅助、电动尾门、驾驶员电动座椅带记忆带腰部支撑、Cricket真皮座椅、远光灯辅助、奥迪驾驶模式选择、奥迪虚拟座舱系统、倒车影像、定速巡航、后部隐私玻璃、电动机械助力转向、电动车窗、防炫目外后视镜带记忆、折叠功能，大灯清洗、舒适钥匙、LED大灯、led动态后尾灯、MMI收音机、彩色屏幕8.3、后排娱乐、自适应大灯、铝制行李架、铝制10幅20轮、前后泊车辅助、语音控制、MMI导航带MMI触摸、BOSE 3D环绕音响、第三排座椅、3幅多功能运动真皮方向盘、Valcona皮革（SE）、运动前座椅（SE）、全景天窗'
-            
+
               }
             }
           ]
@@ -276,7 +280,7 @@ import './img/dz_02.jpg';
                 volume: '',
                 opera: '',
                 info: '3.0T，8速，四驱，前后雷达，18轮，全景天窗，卤素大灯，前雾灯，外后视镜电动调节，一键启动，多功能方向盘带电动调节，定速巡航，自动启停，AUTOHOLD，小屏，蓝牙，胎压监测，真皮座椅带记忆，8向调节，电动尾门，前加热，陡坡缓降'
-              
+
               }
              }
           ]
@@ -586,11 +590,10 @@ import './img/dz_02.jpg';
     this.scrollBody = scrollBody;
     this.scrollItem = scrollItem;
   }
-  
+
   MouseScrollEvent.prototype = {
     constructor: MouseScrollEvent,
     init: function (cb) {
-      // debugger;
       let allItem = $(this.scrollBody).find(this.scrollItem);
       let self = this;
       allItem.each(function () {
@@ -602,7 +605,6 @@ import './img/dz_02.jpg';
       });
     },
     handleScroll: function (e) {
-      // debugger;
       let type = e.type;
       let delta = 0; // 滚动距离
       if (type === 'DOMMouseScroll' || type === 'mousewheel') { // 滚动一下 移动120px
@@ -725,19 +727,18 @@ import './img/dz_02.jpg';
 
   let bindClick = function (origin, target, msEvent, cb) {
     $(origin).on('click', target, function () {
-      // debugger;
       let name = $(this).attr('data-name');
       let index = $(this).index();
       msEvent.setName(name);
       msEvent.setIndex(index);
       msEvent.init(function (index) {
-      cb && cb(msEvent);
+        cb && cb(msEvent);
       });
     });
   }
   // 加载品牌
   let loadBrands = function (obj) {
-    // debugger;
+    // api.GetCarType({})
     let brands = carLogoArr[obj.index].brands || [];
     let brandStr = brands.map(brand => {
       return `
@@ -755,10 +756,10 @@ import './img/dz_02.jpg';
     });
     bindClick('.brand-list', '.brand-item', brandScroll, loadCars);
   }
-  
+
   let logoStr = carLogoArr.map(logo => {
     return `
-      <li class="logo-item" data-name="${logo.title}">
+      <li class="logo-item" data-name="${logo.title}" data-id="${logo.id}">
         <i class="icon font_family ${logo.icon}"></i>
       </li>
     `;
@@ -770,7 +771,7 @@ import './img/dz_02.jpg';
     loadBrands(logoScroll);
   });
   bindClick('.logo-list', '.logo-item', logoScroll, loadBrands);
- 
+
   let maps = {
     0: '综合物流产业园',
     1: '标准运输',
@@ -778,15 +779,17 @@ import './img/dz_02.jpg';
     3: '平行车产业链',
     4: '港口经营'
   };
-
-  /** */
-  let tab = getQueryString('tab');
-  let id = getQueryString('id');
-  // console.log(tab, id);
-  if (notNull(tab) && notNull(id)) {
-    let secondTxt = maps[tab];
-    $('.second-crumb').text(secondTxt);
+  let pages = {
+    pageNo: 1,
+    pageSize: 100
   }
+  /** */
+  let search = location.search;
+  let params = search.substring(1).split('&');
+  let id = params[0].split('=')[1];
+  let tab = params[1].split('=')[1];
+  let secondTxt = maps[tab];
+  $('.second-crumb').text(secondTxt);
   $('.second-crumb').click(function () {
     window.location.href=`business.html?tab=${tab}`;
   });
@@ -794,26 +797,76 @@ import './img/dz_02.jpg';
     window.location.href=`business.html`;
   });
 
-   // 导航栏操作
-   (function ($) {
-    $('nav').addClass('active');
-    let currentIndex = -1;
-    $('.header-nav .nav-a').on('mouseover', function () {
-      let offsetLeft  = $(this).offset().left;
-      let docWidth = $(document).width();
-      let lastWidth = docWidth - offsetLeft;
-      $(this).siblings('.child-list') && $(this).siblings('.child-list').css({width: lastWidth});
-      $(this).addClass('active').parent('.nav-item').siblings().find('.nav-a').removeClass('active');    
-    }).on('mouseout', function () {
-      let self = $(this);
-      self.siblings().on('mouseover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        self.addClass('active').siblings().removeClass('active');
-      }).on('mouseout', function () {
-        self.removeClass('active');
+  function fetchCarBrand ({pageNo, pageSize, companyId}) {
+    api.GetAllCar({pageNo, pageSize, companyId}).then(res => {
+      let carLogos = res.list.map(logo => {
+        return `
+          <li class="logo-item" data-name="${logo.title}">
+            <i class="icon font_family ${logo.icon}"></i>
+          </li>
+        `;
       });
-      self.removeClass('active');
-    });
-  })($);
+      $('.logo-list').empty().append(carLogos).find('.logo-item').eq(0).addClass('active');
+      let logoScroll = new MouseScrollEvent('.car-logo-list', '.logo-list', '.logo-item', '奔驰');
+      logoScroll.init(function () {
+        loadBrands(logoScroll);
+      });
+      bindClick('.logo-list', '.logo-item', logoScroll, loadBrands);
+    })
+  }
+  function fetchData ({id}) {
+    loadingAnimate()
+    api.GetBusinessById({id}).then(res => {
+      removeLoading()
+      // let companyId = res.id
+      // fetchCarBrand({pageNo: pages.pageNo, pageSize: pages.pageSize, companyId});
+      let person = res.companyPrincipals[0];
+      let tempPhone = []
+      if (person.phone1) tempPhone.push(person.phone1)
+      if (person.phone2) tempPhone.push(person.phone2)
+      let phone = tempPhone.map(p => {
+        return `
+          <span class="desc">${p}</span><br/>
+        `
+      }).join('')
+      let personResult = `
+        <div class="info-common info-phone">
+          <div class="common-title">业务联系</div>
+          <div class="common-desc">
+            <span class="desc">${person.name}</span><br>
+            ${phone}
+          </div>
+        </div>
+      `
+      let addressResult = `
+        <div class="info-common info-address">
+          <div class="common-title">办公地址</div>
+          <div class="common-desc">
+            <span class="desc">
+                ${res.detailAddress}
+            </span>
+          </div>
+        </div>
+      `
+      let result = `
+        <div class="left-img"></div>
+        <div class="left-content">
+          <div class="content-title">${res.companyName}</div>
+          <div class="content-desc">
+            ${res.companyDetail}
+          </div>
+        </div>
+        <div class="left-info">
+          ${personResult}
+          ${addressResult}
+        </div>
+      `
+      $('.business-car-left').empty().append(result);
+      // 根据公司id查找车品牌
+      // 根据车品牌查找车类型
+      // 根据车类型查找车详情信息
+    })
+  }
+  fetchData({id})
+  operateNav();
 })($);

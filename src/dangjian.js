@@ -2,7 +2,7 @@ import './sass/dangjian.scss';
 import $ from 'jquery';
 import api from './fetch/api';
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 
@@ -45,7 +45,6 @@ $(function () {
         appendData('.sjjs', sj);
         appendData('.szxg', dz);
         appendData('.zbfc', zb);
-        renderFont()
       })
     })
   }

@@ -7,7 +7,7 @@ import Page from './vendors/myPagination';
 import PerfectScrollbar from 'perfect-scrollbar';
 import api from './fetch/api';
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, renderFont, loadingAnimate, removeLoading} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 (function ($) {
@@ -68,16 +68,21 @@ import {tap} from './utils/tap'
     let title = el.title;
     let loadUrls = []
     let {url1, url2, url3, url4, url5} = el
-    if (url1) loadUrls.push(url1)
-    if (url2) loadUrls.push(url2)
-    if (url3) loadUrls.push(url3)
-    if (url4) loadUrls.push(url4)
-    if (url5) loadUrls.push(url5)
-
+    let urlObj = function (url) {
+      let obj = {};
+      obj.url = url;
+      obj.name = url.substring(url.lastIndexOf('/') + 1);
+      return obj;
+    }
+    if (url1) loadUrls.push(urlObj(url1))
+    if (url2) loadUrls.push(urlObj(url2))
+    if (url3) loadUrls.push(urlObj(url3))
+    if (url4) loadUrls.push(urlObj(url4))
+    if (url5) loadUrls.push(urlObj(url5))
     let downLoadLi = loadUrls.map(url => {
       return `
         <li class="download-item">
-          <a href="${decodeURI(url)}" title="${url}">${url}</a>
+          <a href="${decodeURI(url.url)}" title="${url.name}">${url.name}</a>
         </li>
       `
     })
@@ -119,7 +124,6 @@ import {tap} from './utils/tap'
 
     new PerfectScrollbar('.contact-right-container .result-wrap');
     new PerfectScrollbar('.download-list-wrap .download-list');
-    renderFont('ajax1')
   }
   // refreshData();
 
@@ -222,7 +226,6 @@ import {tap} from './utils/tap'
         }).join('');
         $('.cummun-list').empty().append(str);
 
-        renderFont('ajax2')
         tap('.cummun-list', '.icon', function ({target}) {
           let parent = target.parents('.commun-item')
           if (parent.hasClass('active')) {

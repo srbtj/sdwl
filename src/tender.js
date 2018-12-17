@@ -7,7 +7,7 @@ import Page from './vendors/myPagination';
 import PerfectScrollbar from 'perfect-scrollbar';
 import api from './fetch/api';
 import './vendors/loading'
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData, renderFont} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, noData} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 $(function () {
@@ -69,15 +69,21 @@ $(function () {
     let title = el.title;
     let loadUrls = []
     let {url1, url2, url3, url4, url5} = el
-    if (url1) loadUrls.push(url1)
-    if (url2) loadUrls.push(url2)
-    if (url3) loadUrls.push(url3)
-    if (url4) loadUrls.push(url4)
-    if (url5) loadUrls.push(url5)
+    let urlObj = function (url) {
+      let obj = {};
+      obj.url = url;
+      obj.name = url.substring(url.lastIndexOf('/') + 1);
+      return obj;
+    }
+    if (url1) loadUrls.push(urlObj(url1))
+    if (url2) loadUrls.push(urlObj(url2))
+    if (url3) loadUrls.push(urlObj(url3))
+    if (url4) loadUrls.push(urlObj(url4))
+    if (url5) loadUrls.push(urlObj(url5))
     let downLoadLi = loadUrls.map(url => {
       return `
         <li class="download-item">
-          <a href="url" title="${url}">${url}</a>
+          <a href="${decodeURI(url.url)}" title="${url.name}">${url.name}</a>
         </li>
       `
     })
@@ -116,7 +122,6 @@ $(function () {
     $('.contact-list .contact-item').eq(index).addClass('active').siblings().removeClass('active');
     new PerfectScrollbar('.contact-right-container .result-wrap');
     new PerfectScrollbar('.download-list-wrap .download-list');
-    renderFont('ajax2')
   }
   // 分页获取招标信息
   let fetData = function () {
@@ -165,7 +170,6 @@ $(function () {
     }).join('');
     // 设置默认值与样式
     $('.city-list').empty().append(cityStr);
-    renderFont('ajax2')
     // 点击事件
     tap('.city-list', '.city-item', function ({event, target}) {
       event.preventDefault()
@@ -234,7 +238,6 @@ $(function () {
         })
         getAllCity(pId)
         new PerfectScrollbar('.area-wrap .prov-list');
-        renderFont('ajax3')
       }
     })
   }
