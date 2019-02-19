@@ -39,6 +39,7 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@dvhb/badbrowser": "^1.2.8",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "better-scroll": "^1.13.2",

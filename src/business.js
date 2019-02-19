@@ -93,7 +93,6 @@ import {tap} from './utils/tap'
   // 获取地址栏参数
   let currentTab = getQueryString('tab');
   if ((currentTab !== undefined && currentTab !== null)) {
-    // console.log(currentTab);
     startMove(currentTab, $('.business-tab .tab-header'));
   }
   function initTabTop () {
@@ -101,7 +100,8 @@ import {tap} from './utils/tap'
     $('.block-btn, .desc-btn').on('click', function () {
       let tab = $(this).attr('data-tab');
       let id = $(this).attr('data-id');
-      let carDetail = $(this).attr('data-car')
+      let reg = /^true$/;
+      let carDetail = reg.test($(this).attr('data-car'));
       if (carDetail)  window.location.href = `business-car.html?id=${id}&tab=${tab}`;
       else window.location.href = `business-detail.html?id=${id}&tab=${tab}`;
     })
@@ -176,16 +176,30 @@ import {tap} from './utils/tap'
     let twoObj = arr[1]
     let personOneInfo = initPerson(oneObj, businessType)
     let personTwoInfo = initPerson(twoObj, businessType)
+    let regx1 = '青岛西海岸港口'
+    let oneImg = ``
+    let companyOneClazz = oneObj.companyName.length > 15 ? 'company-name company-name-more' : `company-name`
+    let companyTwoClazz = twoObj.companyName.length > 15 ? 'company-name company-name-more' : 'company-name'
+    if (oneObj.companyName.match(regx1)) {
+      oneImg = `
+        <img src="${oneObj.companyImage}" />
+        <div class="play-model">
+          <i class="icon font_family icon-bofang"></i>
+        </div>
+      `
+    } else {
+      oneImg = `<img src="${oneObj.companyImage}" />`
+    }
     let one = `
       <div class="block-info">
         <div class="block-title">
-          <span>${oneObj.companyName}</span>
+          <span class="${companyOneClazz}">${oneObj.companyName}</span>
           <span class="show-detail mobile-show">
             <i class="icon font_family icon-xiala"></i>
           </span>
         </div>
         <div class="block-img mobile-toggle-hide">
-            <img src="${oneObj.companyImage}" />
+            ${oneImg}
         </div>
         <div class="desc mobile-toggle-hide">
           ${oneObj.companyAbstract}
@@ -194,29 +208,23 @@ import {tap} from './utils/tap'
         ${personOneInfo}
       </div>
     `
-    let twoImg = ``;
     let carDetail = false;
-    if (twoObj.companyName === '山东高速奥维俊杉平行进口车') {
+    let regx = '奥维俊杉'
+    if (twoObj.companyName.match(regx)) {
       carDetail = true;
-      twoImg = `
-        <img src="${twoObj.companyImage}" />
-        <div class="play-model">
-          <i class="icon font_family icon-bofang"></i>
-        </div>
-      `
     } else {
-      twoImg = `<img src="${twoObj.companyImage}" />`
+      carDetail = false;
     }
     let two = `
       <div class="block-info title-another">
         <div class="block-title">
-          <span>${twoObj.companyName}</span>
+          <span class="${companyTwoClazz}">${twoObj.companyName}</span>
           <span class="show-detail mobile-show">
               <i class="icon font_family icon-xiala"></i>
             </span>
         </div>
         <div class="block-img mobile-toggle-hide">
-            ${twoImg}
+          <img src="${twoObj.companyImage}" />
         </div>
         <div class="desc mobile-toggle-hide">
           ${twoObj.companyAbstract}
@@ -316,7 +324,8 @@ import {tap} from './utils/tap'
               tab3Temp.push(item);
               break;
             case 4:
-              if (item.companyName === '山东高速奥维俊杉平行进口车') {
+              let reg = '奥维俊杉'
+              if (item.companyName.match(reg)) {
                 tab4Temp[1] = item
               } else {
                 tab4Temp[0] = item

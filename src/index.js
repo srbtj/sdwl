@@ -8,12 +8,14 @@ import './img/news-default.png';
 import './img/float_ad.png';
 import './img/oybl-mobile.png';
 import './vendors/loading'
+import BrowserDetect from './vendors/browserDetect'
 // 移动端改变html字体大小
-import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading} from './utils/urlFilter';
+import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, getBrowserInfo} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 import api from './fetch/api'
 $(function () {
+  console.log(getBrowserInfo())
   // 加载新闻
   let loadNewsByType = function ({pageNo, pageSize, type, isPush}, cb) {
     loadingAnimate();
@@ -226,7 +228,7 @@ $(function () {
   });
   // 更多新闻
   tap('.tab-header-more', function () {
-    window.location.href = 'news.html?tab=2'
+    window.location.href = 'news.html?tab=1'
   })
 
   function FloatAd(selector) {

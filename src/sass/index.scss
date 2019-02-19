@@ -161,6 +161,11 @@
     position: relative;
     width: 100%;
   }
+  .banner-link{
+    display: block;
+    height: 100%;
+    cursor: pointer;
+  }
   .index_banner_1,
   .index_banner_2,
   .index_banner_3,
@@ -725,6 +730,34 @@
         color: $index-title-color;
         line-height: 1;
         margin-top: 10px;
+      }
+    }
+  }
+}
+/** 党建 **/
+.dj-wrap{
+  .main-wrap{
+    position: relative;
+    .dj-info{
+      position: absolute;
+      font-size: 0;
+      border-left: 4px solid #fff;
+      .dj-common{
+        display: inline-block;
+        vertical-align: top;
+        color: #fff;
+      }
+      .dj-btn{
+        position: relative;
+        color: #d00007;
+        border-radius: 999px;
+        background: #fff;
+        cursor: pointer;
+        .icon{
+          position: absolute;
+          top: 0;
+          color: #d00007;
+        }
       }
     }
   }

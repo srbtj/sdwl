@@ -122,7 +122,7 @@ body > .business-tab,
   }
 }
 .tab-1::before{
-  
+
   @media all and (min-width: $min-width-750 + 1) {
     left: 0;
     content: '';
@@ -264,7 +264,7 @@ body > .business-tab,
       font-size: $font-size-12;
       color: $font-blank-color;
       line-height: 22px;
-    } 
+    }
   }
 }
 .tab-body-right{
@@ -277,11 +277,11 @@ body > .business-tab,
     border-left: 4px solid $nav-bg-color;
     color: $font-blank-color;
     position: relative;
+    top: -10px;
     .at-logo{
       position: absolute;
       right: 20px;
       top: -20px;
-
     }
   }
   .block-info{
@@ -291,6 +291,15 @@ body > .business-tab,
     @include displayInlineBlock;
     .block-title{
       margin-top: 30px;
+      height: 22px;
+    }
+    .company-name{
+      position: absolute;
+      top: 0;
+    }
+    .company-name-more{
+      line-height: 1.2;
+      top: -8px;
     }
     .block-img{
       margin-top: 8px;
@@ -361,6 +370,8 @@ body > .business-tab,
       line-height: 22px;
       color: $font-blank-color;
       margin-top: 14px;
+      max-height: 110px;
+      overflow-y: auto;
     }
   }
   .block-service{
@@ -446,7 +457,7 @@ body > .business-tab,
         cursor: pointer;
       }
     }
-    
+
   }
   .right-img:hover{
     .play-model{
@@ -511,7 +522,7 @@ body > .business-tab,
       }
     }
   }
-  
+
 }
 
 body > .business-tab{

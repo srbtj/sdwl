@@ -57,14 +57,14 @@
     .left-img{
       width: 100%;
       // background: pink;
-      @media all and (min-width: $max-width-1190) {
-        background: url(../img/pxc.png) no-repeat center;
-        background-size: contain;
-      }
-      @media all and (min-width: $min-width-750) and (max-width: $max-width-1190){
-        background: url(../img/pxc-980.png) no-repeat center;
-        background-size: contain;
-      }
+      // @media all and (min-width: $max-width-1190) {
+      //   background: url(../img/pxc.png) no-repeat center;
+      //   background-size: contain;
+      // }
+      // @media all and (min-width: $min-width-750) and (max-width: $max-width-1190){
+      //   background: url(../img/pxc-980.png) no-repeat center;
+      //   background-size: contain;
+      // }
     }
     .left-content{
       margin-top: 4px;
@@ -94,7 +94,7 @@
       border-top: 2px solid #e6e6e6;
     }
   }
-  
+
   .business-car-right{
     overflow: hidden;
     position: relative;
@@ -257,7 +257,7 @@
         color: $search-result-font-color;
         font-size: 13px;
         line-height: 24px;
-        
+
       }
     }
     .prev,

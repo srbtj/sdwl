@@ -849,7 +849,9 @@ import './img/dz_02.jpg';
         </div>
       `
       let result = `
-        <div class="left-img"></div>
+        <div class="left-img">
+          <img style="width: 100%; height: 100%;" src="${res.companyImage}" />
+        </div>
         <div class="left-content">
           <div class="content-title">${res.companyName}</div>
           <div class="content-desc">

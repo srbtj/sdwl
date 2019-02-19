@@ -60,7 +60,7 @@ import moment from 'moment';
   }
 
   let initLikeNews = function (obj) {
-    let {id, publisher, count, title, content, date} = obj
+    let {id, publisher, count, title, newsAbstract, date} = obj
     let times = moment(date).format('YYYY-MM-DD').split('-');
     let lideNewsStr = `
       <div class="new-recommand-info">
@@ -75,8 +75,8 @@ import moment from 'moment';
             <span class="sub-tite-common">发布者: <span class="pub-name">${publisher || '物流集团'}</span></span>
             <span class="sub-tite-common ml">浏览次数: <span class="scale-time">${count}</span></span>
           </div>
-          <div class="detail-ctx">
-            ${content}
+          <div style="font-size: 12px; line-height: 1.5; margin-top: 10px; max-height: 140px; min-height: 80px;">
+            ${newsAbstract}
           </div>
         </div>
       </div>

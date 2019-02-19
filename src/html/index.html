@@ -5,11 +5,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>山东高速物流集团有限公司-首页</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <script src = "https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <script>
       var _hmt = _hmt || [];
@@ -19,6 +19,29 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
+
+    function IEVersion () {
+      var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+      var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+      var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+      var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+      if(isIE) {
+          var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+          reIE.test(userAgent);
+          var fIEVersion = parseFloat(RegExp["$1"]);
+          if (fIEVersion > 6) {// IE版本：7,8,9,10
+              return 'ie' + fIEVersion;
+          } else { //IE版本<=6
+              return 'ie6';
+          }
+      } else if(isEdge) {
+          return 'edge';//edge
+      } else if(isIE11) {
+          return 'ie11'; //IE11
+      } else {
+          return 'not ie';//不是ie浏览器
+      }
+    };
     </script>
   </head>
   <body>
@@ -116,42 +139,52 @@
         <div class="flexslider index-banner">
           <ul class="slides banner-list">
             <li class="banner-item index_banner index_banner_2">
-              <div class="main-wrap">
-                <div class="banner-desc b_t_2 fl">
+              <a href="business.html?tab=0" class="banner-link">
+                <div class="main-wrap">
+                  <div class="banner-desc b_t_2 fl">
+                  </div>
                 </div>
-              </div>
+              </a>
             </li>
             <li class="banner-item index_banner index_banner_1">
+              <a href="business.html?tab=1" class="banner-link">
                 <div class="main-wrap">
                   <div class="banner-desc b_t_1 fr">
                     <!-- <div class="banner-sub-title">物流+产业 汇聚优势资源</div>
                     <div class="banner-title">综合物流产业园区</div> -->
                   </div>
                 </div>
-              </li>
+              </a>
+            </li>
             <li class="banner-item index_banner index_banner_3">
-              <div class="main-wrap">
-                <div class="banner-desc b_t_3 fr">
-                  <!-- <div class="banner-sub-title">大宗商品一体化 赋能供应链</div>
-                  <div class="banner-title">商贸流通</div> -->
+              <a href="business.html?tab=2" class="banner-link">
+                <div class="main-wrap">
+                  <div class="banner-desc b_t_3 fr">
+                    <!-- <div class="banner-sub-title">大宗商品一体化 赋能供应链</div>
+                    <div class="banner-title">商贸流通</div> -->
+                  </div>
                 </div>
-              </div>
+              </a>
             </li>
             <li class="banner-item index_banner index_banner_4">
-              <div class="main-wrap">
-                <div class="banner-desc b_t_4 fr">
-                  <!-- <div class="banner-sub-title">行业领先的汽车供应链平台</div>
-                  <div class="banner-title">平行车产业链</div>    -->
+              <a href="business.html?tab=3" class="banner-link">
+                <div class="main-wrap">
+                  <div class="banner-desc b_t_4 fr">
+                    <!-- <div class="banner-sub-title">行业领先的汽车供应链平台</div>
+                    <div class="banner-title">平行车产业链</div>    -->
+                  </div>
                 </div>
-              </div>
+              </a>
             </li>
             <li class="banner-item index_banner_5">
-              <div class="main-wrap">
-                <div class="banner-desc b_t_5 fr">
-                  <!-- <div class="banner-sub-title">临海扬帆 港通天下</div>
-                  <div class="banner-title">港口经营</div> -->
+              <a href="business.html?tab=4" class="banner-link">
+                <div class="main-wrap">
+                  <div class="banner-desc b_t_5 fr">
+                    <!-- <div class="banner-sub-title">临海扬帆 港通天下</div>
+                    <div class="banner-title">港口经营</div> -->
+                  </div>
                 </div>
-              </div>
+              </a>
             </li>
           </ul>
           <div class="index-notice">
@@ -329,6 +362,17 @@
           </div>
         </div> -->
         <!-- 里程碑 end -->
+        <div class="dj-wrap">
+          <div class="main-wrap">
+            <div class="dj-info">
+              <div class="dj-common dj-txt">党的建设</div>
+              <a class="dj-common dj-btn" href="dangjian.html">
+                <span class="dj-btn-txt">党建专栏</span>
+                <i class="icon font_family icon-youjiantou"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- 内容区域 end -->
       <!-- 底部 start -->
@@ -351,7 +395,7 @@
                   <li class="company-item"><a class="company-a" href="http://www.sdhsie.com/">山东高速信息工程有限公司</a></li>
                 </ul>
                 <div class="f-copy f-copy-top">
-                  <span class="copy-numb"> CP备案号：鲁ICP备12011428号-1.</span>
+                  <span class="copy-numb"> <a href="http://www.miitbeian.gov.cn/" target="_blank" style="color: #586c63;">CP备案号：鲁ICP备12011428号-1.</a></span>
                   <span class="copy-address">Copyright© 山东高速物流集团有限公司 版权所有.</span>
                 </div>
               </div>
@@ -376,14 +420,14 @@
                     <div class="f-address-info">山东省青岛市黄岛区长江西路161号办公1701-1712</div>
                   </div>
               </div>
-              <!-- <div class="f-common f-share">
+              <div class="f-common f-share">
                 <div class="f-wx">
                   <i class="icon font_family icon-weixin-icon"></i>
                   <div class="share-logo">
                     <div class="wx-code"></div>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
       </div>
       <div class="back-top">

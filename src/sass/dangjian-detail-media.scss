@@ -104,11 +104,15 @@
 }
 
 @media all and (max-width: $min-width-750) {
+  #container{
+    width: px2rem(750);
+    overflow: hidden;
+  }
   #main .main-wrap,
   .main-wrap{
     // padding: 0 px2rem(30);
     padding: 0;
-    // overflow: hidden;
+    overflow: hidden;
   }
   .mobile-hide{
     display: none !important;

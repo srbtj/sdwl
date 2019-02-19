@@ -73,16 +73,16 @@ import api from './fetch/api';
 
   loadData();
 
-  $('.group-btn-group').btnGroup({
-    index: tab,
-    cb: function (index) {
-      $('.tab-item').eq(index).show().siblings('.tab-item').hide();
-      if (index === 0) {
-      } else if (index === 1) {
-        initEventInfo()
-      }
-    }
-  });
+  // $('.group-btn-group').btnGroup({
+  //   index: tab,
+  //   cb: function (index) {
+  //     $('.tab-item').eq(index).show().siblings('.tab-item').hide();
+  //     if (index === 0) {
+  //     } else if (index === 1) {
+  //       initEventInfo()
+  //     }
+  //   }
+  // });
 
   let showOrHide = function (target, index) {
     target.eq(index).addClass('show').siblings().removeClass('show')

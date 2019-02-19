@@ -87,7 +87,7 @@ $(function () {
   fetchData({id})
 
   $('.second-crumb').click(function () {
-    window.location.href=`business.html?tab=${tab-1}`;
+    window.location.href=`business.html?tab=${tab}`;
   });
   $('.first-crumb').click(function () {
     window.location.href=`business.html`;
