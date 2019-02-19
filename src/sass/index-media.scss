@@ -163,7 +163,8 @@
     .main-wrap{
       .dj-info{
         right: 0;
-        top: 45px;
+        // top: 45px;
+        top: 35px;
         width: 390px;
         height: 40px;
         .dj-common{
@@ -365,7 +366,8 @@
     .main-wrap{
       .dj-info{
         right: 0;
-        top: 45px;
+        // top: 45px;
+        top: 35px;
         width: 360px;
         height: 40px;
         .dj-common{
@@ -374,6 +376,9 @@
         .dj-txt{
           font-size: 24px;
           margin-left: 35px;
+        }
+        .dj-phone{
+          font-size: 20px;
         }
         .dj-btn{
           top: 5px;
@@ -798,7 +803,7 @@
     background-size: cover;
     .main-wrap{
       .dj-info{
-        top: px2rem(100);
+        top: px2rem(80);
         left: px2rem(30);
         width: 100%;
         height: px2rem(40);
@@ -821,6 +826,13 @@
             font-size: px2rem(34);
             right: px2rem(15);
           }
+        }
+        .dj-phone{
+          position: absolute;
+          left: px2rem(30);
+          top: px2rem(60);
+          font-size: px2rem(34);
+          color: #eed;
         }
       }
     }
