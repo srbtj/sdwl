@@ -164,7 +164,7 @@
       .dj-info{
         right: 0;
         // top: 45px;
-        top: 35px;
+        top: 30px;
         width: 390px;
         height: 40px;
         .dj-common{
@@ -367,7 +367,7 @@
       .dj-info{
         right: 0;
         // top: 45px;
-        top: 35px;
+        top: 30px;
         width: 360px;
         height: 40px;
         .dj-common{
@@ -376,9 +376,6 @@
         .dj-txt{
           font-size: 24px;
           margin-left: 35px;
-        }
-        .dj-phone{
-          font-size: 20px;
         }
         .dj-btn{
           top: 5px;
@@ -808,6 +805,14 @@
         width: 100%;
         height: px2rem(40);
         border-left-width: px2rem(8);
+        &::before{
+          position: absolute;
+          left: 0px;
+          top: px2rem(0);
+          content: '';
+          border-left: px2rem(4) solid #fff;
+          height: px2rem(95);
+        }
         .dj-common{
           line-height: px2rem(40);
         }
@@ -831,8 +836,8 @@
           position: absolute;
           left: px2rem(30);
           top: px2rem(60);
-          font-size: px2rem(34);
-          color: #eed;
+          font-size: px2rem(28);
+          // color: #eed;
         }
       }
     }
