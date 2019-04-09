@@ -1,10 +1,4 @@
-// let prefix = process.env.NODE_ENV === 'production' ? 'http://www.sdgswl.com' : 'http://10.192.34.31:9090'
-// let prefix = '/api'
-// let prefix = process.env.NODE_ENV === 'production' ? 'http://39.108.5.62:9090' : 'http://39.108.5.62:9090'
-// console.log(prefix);
-// let prefix = 'http://10.187.0.41:8080';
-// let prefix = `http://www.fangart.cn`
-let prefix = `http://www.sdgswl.com`
+let prefix = "http://47.105.170.117:8080"
 export const URLS = {
   BASEURL: prefix,
   // 首页接口

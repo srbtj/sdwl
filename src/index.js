@@ -182,12 +182,12 @@ $(function () {
       initCalc();
     });
     initCalc();
-    tap('.logistic-train', function () {
-      $('#blPage').show();
-    })
-    tap('#blPage .bl-close', function () {
-      $('#blPage').hide();
-    })
+    // tap('.logistic-train', function () {
+    //   $('#blPage').show();
+    // })
+    // tap('#blPage .bl-close', function () {
+    //   $('#blPage').hide();
+    // })
   })($);
 
   // 返回顶部
@@ -260,10 +260,11 @@ $(function () {
         windowWidth = $(window).width();//浏览器宽度
     });
 
-    obj.on('click', function () {
-      $('#blPage').show();
-      $(this).hide()
-    });
+    // obj.on('click', function () {
+      // $('#blPage').show();
+      // $(this).hide()
+      // window.location.href = 'http://47.105.190.85/oybl/index.html'
+    // });
     function move() {//定期执行的函数，使元素移动
         var currentPos = obj.position();//获取当前位置，这是JQuery的函数，具体见：http://hemin.cn/jq/position.html
         var nextPosX = currentPos.left + dirX;//下一个水平位置
