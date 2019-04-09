@@ -748,7 +748,7 @@
         top: 5px;
         content: '';
         border-left: 4px solid #fff;
-        height: 65px;
+        height: 90px;
       }
       .dj-common{
         display: inline-block;
@@ -772,7 +772,10 @@
         left: 35px;
         top: 40px;
         color: #fff;
-        font-size: 18px;
+        font-size: 16px;
+      }
+      .dj-email{
+        top: 65px;
       }
     }
   }
