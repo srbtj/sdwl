@@ -1,4 +1,4 @@
-let prefix = "http://47.105.170.117:8080"
+let prefix = "http://47.105.170.117:9090"
 export const URLS = {
   BASEURL: prefix,
   // 首页接口
