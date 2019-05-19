@@ -45,7 +45,8 @@
     font-size: 24px;
   }
 }
-#floatAd{
+#floatAd,
+#floatAd2{
   display: none;
   position: absolute;
   left: 0;
@@ -178,43 +179,22 @@
   .index_banner_1{
     background: url(../img/index_banner_1.png) center no-repeat;
     background-size: cover;
-    @media all and (max-width: $min-width-750) {
-      background: url(../img/index_banner_1_750.png) center no-repeat;
-      background-size: cover;
-    }
-
   }
   .index_banner_2{
     background: url(../img/index_banner_2.png) center no-repeat;
     background-size: cover;
-    @media all and (max-width: $min-width-750) {
-      background: url(../img/index_banner_2_750.png) center no-repeat;
-      background-size: cover;
-    }
   }
   .index_banner_3{
     background: url(../img/index_banner_3.png) center no-repeat;
     background-size: cover;
-    @media all and (max-width: $min-width-750) {
-      background: url(../img/index_banner_3_750.png) center no-repeat;
-      background-size: cover;
-    }
   }
   .index_banner_4{
     background: url(../img/index_banner_4.png) center no-repeat;
     background-size: cover;
-    @media all and (max-width: $min-width-750) {
-      background: url(../img/index_banner_4_750.png) center no-repeat;
-      background-size: cover;
-    }
   }
   .index_banner_5{
     background: url(../img/index_banner_5.png) center no-repeat;
     background-size: cover;
-    @media all and (max-width: $min-width-750) {
-      background: url(../img/index_banner_5_750.png) center no-repeat;
-      background-size: cover;
-    }
   }
   .index-notice{
     position: absolute;

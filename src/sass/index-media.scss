@@ -499,10 +499,32 @@
     }
   }
 
+  .index-banner{
+    .index_banner_1{
+      background: url(../img/index_br_1_750.png) center no-repeat;
+      background-size: cover;
+    }
+    .index_banner_2{
+      background: url(../img/index_br_2_750.png) center no-repeat;
+      background-size: cover;
+    }
+    .index_banner_3{
+      background: url(../img/index_br_3_750.png) center no-repeat;
+      background-size: cover;
+    }
+    .index_banner_4{
+      background: url(../img/index_br_4_750.png) center no-repeat;
+      background-size: cover;
+    }
+    .index_banner_5{
+      background: url(../img/index_br_5_750.png) center no-repeat;
+        background-size: cover
+    }
+  }
+
   .index-news-wrap{
     padding: px2rem(35) 0;
-    // height: px2rem(198);
-    height: px2rem(270);
+    height: px2rem(460);
     .news-img,
     .news-desc{
       height: px2rem(140);
@@ -534,6 +556,49 @@
       .news-info .news-info-span{
         line-height: 1.5;
         font-size: px2rem(24);
+      }
+    }
+    .news-mobile-info{
+      .news-mobile-title{
+        position: relative;
+        height: px2rem(120);
+        font-size: px2rem(28);
+        color: #666;
+        line-height: px2rem(120);
+        font-weight: bold;
+        padding-left: px2rem(30);
+        &::before{
+          position: absolute;
+          left: 0;
+          top: 50%;
+          margin-top: px2rem(-20);
+          content: '';
+          height: px2rem(40);
+          border: px2rem(4) solid #04a450;
+        }
+      }
+      .news-mobile-item{
+        height: px2rem(80);
+        line-height: px2rem(80);
+        border-top: px2rem(1) solid #dedfe2;
+        box-sizing: border-box;
+        .news-mobile-item-ctx{
+          display: inline-block;
+          position: relative;
+          font-size: px2rem(30);
+          @include overflowHidden;
+          max-width: px2rem(600);
+          color: #262626;
+          vertical-align: top;
+          // margin-right: 0 px2rem(20) 0 0;
+          line-height: px2rem(80);
+        }
+        .icon{
+          position: relative;
+          font-size: px2rem(24);
+          color: #04a450;
+          margin-left: px2rem(15);
+        }
       }
     }
   }
@@ -823,15 +888,17 @@
           margin-left: px2rem(30);
         }
         .dj-btn{
-          top: px2rem(-10);
+          position: relative;
+          top: px2rem(-15);
           margin-left: px2rem(40);
           font-size: px2rem(28);
-          height: px2rem(60);
+          // height: px2rem(60);
           line-height: px2rem(60);
-          padding: 0 px2rem(74) 0 px2rem(36);
+          padding: px2rem(5) px2rem(74) 0 px2rem(36);
           .icon{
             font-size: px2rem(34);
             right: px2rem(15);
+            top: px2rem(5);
           }
         }
         .dj-phone{

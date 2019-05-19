@@ -81,6 +81,9 @@
     position: absolute;
     right: px2rem(30);
     top: 0px;
+    bottom: 0;
+    width: px2rem(95);
+    text-align: right;
     .icon-caidan{
       font-size: px2rem(40);
       color: $nav-bg-color;

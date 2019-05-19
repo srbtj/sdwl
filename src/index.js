@@ -8,14 +8,14 @@ import './img/news-default.png';
 import './img/float_ad.png';
 import './img/oybl-mobile.png';
 import './vendors/loading'
-import BrowserDetect from './vendors/browserDetect'
+import './img/zhaopin.jpg';
+// import BrowserDetect from './vendors/browserDetect'
 // 移动端改变html字体大小
 import {changeScreen, mobileSlider, operateNav, loadingAnimate, removeLoading, getBrowserInfo} from './utils/urlFilter';
 import moment from 'moment';
 import {tap} from './utils/tap'
 import api from './fetch/api'
 $(function () {
-  console.log(getBrowserInfo())
   // 加载新闻
   let loadNewsByType = function ({pageNo, pageSize, type, isPush}, cb) {
     loadingAnimate();
@@ -41,7 +41,6 @@ $(function () {
   });
   // 推送新闻
   loadNewsByType({pageNo: 1, pageSize: 1, type: 1, isPush: true}, function (data) {
-    // console.log('推送新闻', data);
     let tops = data.map(item => {
       let img_info = item.url || './img/news-default.png'
       let abstract = $('html, boyd').get(0).offsetWidth <= 750 ?
@@ -92,6 +91,35 @@ $(function () {
     }).join('');
     $('.mtxw').empty().append(orgs);
   });
+  (function () {
+    api.GetAllNewsByPage({pageNo: 1, pageSize: 4}).then(res => {
+      const list = res.list || [];
+      const news = list.map((item, index) => {
+        if (index < 3) {
+          return `
+            <li class="news-mobile-item" data-id="${item.id}">
+              <p class="news-mobile-item-ctx">
+                ${item.title}
+              </p>
+              <i class="icon font_family icon-new"></i>
+            </li>
+          `
+        } else {
+          return `
+            <li class="news-mobile-item" data-id="${item.id}">
+              <p class="news-mobile-item-ctx">
+                ${item.title}
+              </p>
+            </li>
+          `
+        }
+      }).join('')
+      $('.news-mobile-list').empty().append(news);
+      tap('.news-mobile-list', '.news-mobile-item', function ({target}) {
+        window.location.href=`news-detail.html?id=${target.attr('data-id')}`
+      })
+    });
+  })()
   // 新闻
   tap('.tab-header', '.tab-header-title', function ({target}) {
     target.addClass('active').siblings().removeClass('active');
@@ -231,17 +259,17 @@ $(function () {
     window.location.href = 'news.html?tab=1'
   })
 
-  function FloatAd(selector) {
+  function FloatAd(selector, disX, disY, delay) {
     let offsetWidth = $('html, boyd').get(0).offsetWidth;
     if (offsetWidth <= 750) return;
     var obj = $(selector);
     if (obj.find(".item").length == 0) return;//如果没有内容，不执行
     var windowHeight = $(window).height();//浏览器高度
     var windowWidth = $(window).width();//浏览器宽度
-    var dirX = -1.5;//每次水平漂浮方向及距离(单位：px)，正数向右，负数向左，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
-    var dirY = -1;//每次垂直漂浮方向及距离(单位：px)，正数向下，负数向上，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
+    var dirX = disX || -1.5;//每次水平漂浮方向及距离(单位：px)，正数向右，负数向左，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
+    var dirY = disY || -1;//每次垂直漂浮方向及距离(单位：px)，正数向下，负数向上，如果越大的话就会看起来越不流畅，但在某些需求下你可能会需要这种效果
 
-    var delay = 30;//定期执行的时间间隔，单位毫秒
+    var delay = delay || 30;//定期执行的时间间隔，单位毫秒
     obj.css({ left: windowWidth / 2 - obj.width() / 2 + "px", top: windowHeight / 2 - obj.height() / 2 + "px" });//把元素设置成在页面中间
     obj.show();//元素默认是隐藏的，避免上一句代码改变位置视觉突兀，改变位置后再显示出来
     var handler = setInterval(move, delay);//定期执行，返回一个值，这个值可以用来取消定期执行
@@ -252,27 +280,28 @@ $(function () {
         handler = setInterval(move, delay);
     });
 
-    obj.find(".ad-close").click(function() {//绑定关闭按钮事件
-        close();
+    obj.find(".ad-close").click(function(e) {//绑定关闭按钮事件
+      e.preventDefault();
+      close();
     });
     $(window).resize(function() {//当改变窗口大小时，重新获取浏览器大小，以保证不会过界（飘出浏览器可视范围）或漂的范围小于新的大小
         windowHeight = $(window).height();//浏览器高度
         windowWidth = $(window).width();//浏览器宽度
     });
 
-    // obj.on('click', function () {
-      // $('#blPage').show();
-      // $(this).hide()
-      // window.location.href = 'http://47.105.190.85/oybl/index.html'
-    // });
+    obj.on('click', function () {
+      $('#blPage').show();
+      $(this).hide()
+      window.location.href = 'http://47.105.190.85/oybl/index.html'
+    });
     function move() {//定期执行的函数，使元素移动
         var currentPos = obj.position();//获取当前位置，这是JQuery的函数，具体见：http://hemin.cn/jq/position.html
         var nextPosX = currentPos.left + dirX;//下一个水平位置
         var nextPosY = currentPos.top + dirY;//下一个垂直位置
 
-        if (nextPosX >= windowWidth - obj.width()) {//这一段是本站特有的需求，当漂浮到右边时关闭漂浮窗口，如不需要可删除
-            close();
-        }
+        // if (nextPosX >= windowWidth - obj.width()) {//这一段是本站特有的需求，当漂浮到右边时关闭漂浮窗口，如不需要可删除
+        //     close();
+        // }
 
         if (nextPosX <= 0 || nextPosX >= windowWidth - obj.width()) {//如果达到左边，或者达到右边，则改变为相反方向
             dirX = dirX * -1;//改变方向
@@ -286,8 +315,8 @@ $(function () {
     }
 
     function close() {//停止漂浮，并销毁漂浮窗口
-        clearInterval(handler);
-        obj.remove();
+      clearInterval(handler);
+      obj.remove();
     }
   }
 
@@ -316,5 +345,6 @@ $(function () {
   mobileSlider();
   operateNav();
 
-  FloatAd('#floatAd')
+  FloatAd('#floatAd');
+  FloatAd('#floatAd2', 3, 2, 50);
 });
